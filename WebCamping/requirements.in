@@ -4,6 +4,7 @@ django-environ
 djangorestframework
 django-filter
 markdown
+requests
 
 # Security
 django-axes
