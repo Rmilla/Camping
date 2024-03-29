@@ -27,9 +27,6 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8k=nd_&r0t!wo&-9^s$eyp8#(0e(yypcs5f+g3=-qn4klh-5o_'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -109,6 +106,8 @@ MONGODB_DATABASES = {
         "tz_aware": True, # if you using timezones in django (USE_TZ = True)
     },
 }
+
+SESSION_ENGINE="django_mongoengine.sessionsadd"
 
 INSTALLED_APPS += ["django_mongoengine"]
 
