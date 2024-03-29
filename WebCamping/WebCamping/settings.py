@@ -107,6 +107,7 @@ MONGODB_DATABASES = {
 
 SESSION_ENGINE="django_mongoengine.sessions.SessionStore"
 #Not sur if this is correct or if it is necessary to use "django_mongoengine.sessions" instead
+#as in the github of mongoengine
 INSTALLED_APPS += ["django_mongoengine"]
 
 
@@ -128,6 +129,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'mongoengine.django.auth.MongoEngineBackend',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
