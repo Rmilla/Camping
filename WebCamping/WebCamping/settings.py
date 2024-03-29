@@ -105,8 +105,8 @@ MONGODB_DATABASES = {
     },
 }
 
-SESSION_ENGINE="django_mongoengine.sessionsadd"
-
+SESSION_ENGINE="django_mongoengine.sessions.SessionStore"
+#Not sur if this is correct or if it is necessary to use "django_mongoengine.sessions" instead
 INSTALLED_APPS += ["django_mongoengine"]
 
 
