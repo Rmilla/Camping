@@ -1,10 +1,12 @@
-Django
+Django==3.0
 django-mongoengine
+mongoengine==0.28.2
 django-environ
-djangorestframework
+djangorestframework==3.*
 django-filter
 markdown
 requests
+blinker==1.*
 
 # Security
 django-axes
