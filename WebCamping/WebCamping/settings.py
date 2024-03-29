@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,6 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-8k=nd_&r0t!wo&-9^s$eyp8#(0e(yypcs5f+g3=-qn4klh-5o_'
@@ -37,6 +45,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework_mongoengine',
+    'rest_framework',
+    'mongoengine.django.mongo_auth',
+    'django_mongoengine',
+    'mongoengine',
+    "rest_framework.authtoken",
+    "django_filters",
+    "camping",
+    "admin_honeypot",
+    "axes",
 ]
 
 MIDDLEWARE = [
@@ -73,12 +91,26 @@ WSGI_APPLICATION = 'WebCamping.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+"""
+
+MONGODB_DATABASES = {
+    "default": {
+        "name": "TestCamping",
+        "host": env("MONGODB_HOST"),
+        "port": env("MONGODB_PORT"),
+        "password": env("MONGODB_PASSWORD"),
+        "username": env("MONGODB_USERNAME"),
+        "tz_aware": True, # if you using timezones in django (USE_TZ = True)
+    },
+}
+
+INSTALLED_APPS += ["django_mongoengine"]
 
 
 # Password validation
