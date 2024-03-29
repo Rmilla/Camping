@@ -30,8 +30,10 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1"]
 
+# MongoDB settings
+MONGODB_DATABASES = {"default": {"name": "django_mongoengine"}}
 
 # Application definition
 
@@ -43,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'django_mongoengine.django.mongo_auth',
+    'django-mongoengine'
+    'django-mongoengine.mongo_auth',
     'django_mongoengine.mongo_admin',
     "rest_framework.authtoken",
     "django_filters",
@@ -51,6 +54,10 @@ INSTALLED_APPS = [
     "admin_honeypot",
     "axes",
 ]
+
+AUTH_USER_MODEL = 'mongo_auth.MongoUser'
+
+AUTHENTICATION_BACKENDS = ("django_mongoengine.mongo_auth.backends.MongoEngineBackend",)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
