@@ -1,0 +1,12 @@
+Django
+django-mongoengine
+django-environ
+djangorestframework
+django-filter
+markdown
+
+# Security
+django-axes
+django-admin-honeypot-updated-2021
+django-cors-middleware
+django-cors-headers
