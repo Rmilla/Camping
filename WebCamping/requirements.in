@@ -7,7 +7,7 @@ django-filter
 markdown
 requests
 blinker==1.*
-
+pymongo
 # Security
 django-axes
 django-admin-honeypot-updated-2021
