@@ -16,15 +16,14 @@ PASSWORD=env("MONGODB_PASSWORD")
 USERNAME=env("MONGODB_USERNAME")
 
 #A voir si il faut vraiment rajouter le port (PORT) pour obtenir la connection
-uri=f"mongodb+srv://{USERNAME}:{PASSWORD}@{HOST}/{DATABASE}"
+#uri=f"mongodb+srv://{USERNAME}:{PASSWORD}@{HOST}/{DATABASE}"
 #print(uri)
 
 class CampingConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'camping'
-connect(db=DATABASE, username=USERNAME,password=PASSWORD,host=HOST,port=PORT, alias="db")
-"""    def ready(self):
+    name = 'camping' 
+    def ready(self):
         # Define the MongoDB connection settings
         # Connect to MongoDB
-        connect(uri)"""
+        connect(db=DATABASE, username=USERNAME,password=PASSWORD,host=HOST,port=PORT, alias="db")
         
