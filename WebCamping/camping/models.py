@@ -16,3 +16,12 @@ class Adresses_campings(Document):
     id_Adresses = fields.StringField(required=True, max_length=200)
     Adresse_complète = fields.StringField(required=True, max_length=200)
     Pays = fields.StringField(required=True, max_length=200)
+
+class Client(Document):
+    adress = fields.StringField(required=True, max_length=200)
+    code_postal = fields.StringField(required=True, max_length=200)
+    ville = fields.StringField(required=True, max_length=200)
+    pays = fields.StringField(required=True, max_length=200)
+    longitude = fields.StringField(required=True, max_length=200)
+    latitude = fields.StringField(required=True, max_length=200)
+
