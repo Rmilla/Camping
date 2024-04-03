@@ -29,7 +29,7 @@ class Client(Document):
 
 class Voyager(Document):
     emission = fields.models.FloatField(required=True)
-    vehicule = fields.StringField(required=True, choices=[('voiture','Voiture'),('avions','Avions'),('train','Train'),('moto','Moto'),('voitures_e','Voitures_electrique')], default='voiture')
+    vehicule = fields.StringField(required=True, choices=[('voiture','Voiture'),('train','Train'),('bus','Bus'),('voitures_e','Voitures_electrique')], default='voiture')
     distance_parcourue = fields.models.FloatField(required=True)
     id_client = fields.StringField(required=True, max_length=200)
     id_camping = fields.StringField(required=True, max_length=200)
@@ -38,11 +38,10 @@ class Voyager(Document):
 def calcul_emission(Voyager):
     # définis les facteurs d'émissions
     facteurs = {
-        'voiture': 0.218,
-        'moto': 0.191,
-        'avions': 0.188,
-        'voitures_e': 0.103,
-        'train': 0.003
+        'Voiture': 0.218,
+        'Voitures_electrique': 0.103,
+        'Train': 0.003,
+        'Bus' : 0.113,
     }
 
     # vérifie si le vehicule est bien dans la liste des facteurs
