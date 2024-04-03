@@ -9,9 +9,9 @@ class Camping(Document):
     code_postale = fields.StringField(required=True)
     ville = fields.StringField(required=True)
     pays = fields.StringField(required=True)
-    emission_total = fields.StringField(required=True)
-    longitude = fields.StringField(required=True)
-    latitude = fields.StringField(required=True)
+    emission_total = fields.StringField()
+    longitude = fields.StringField()
+    latitude = fields.StringField()
 
 class Adresses_campings(Document):
     id_Adresses = fields.StringField(required=True, max_length=200)
@@ -24,13 +24,13 @@ class Client(Document):
     code_postal = fields.StringField(required=True, max_length=200)
     ville = fields.StringField(required=True, max_length=200)
     pays = fields.StringField(required=True, max_length=200)
-    longitude = fields.StringField(required=True, max_length=200)
-    latitude = fields.StringField(required=True, max_length=200)
+    longitude = fields.StringField(max_length=200)
+    latitude = fields.StringField(max_length=200)
 
 class Voyager(Document):
-    emission = fields.models.FloatField(required=True)
-    vehicule = fields.StringField(required=True, choices=[('voiture','Voiture'),('avions','Avions'),('train','Train'),('moto','Moto'),('voitures_e','Voitures_electrique')], default='voiture')
-    distance_parcourue = fields.models.FloatField(required=True)
+    emission = fields.FloatField()
+    vehicule = fields.StringField(required=True, choices=[('voiture','Voiture'),('train','Train'),('bus','Bus'),('voitures_e','Voitures_electrique')], default='voiture')
+    distance_parcourue = fields.FloatField()
     id_client = fields.StringField(required=True, max_length=200)
     id_camping = fields.StringField(required=True, max_length=200)
     année = fields.DateField(required=True)
@@ -38,11 +38,10 @@ class Voyager(Document):
 def calcul_emission(Voyager):
     # définis les facteurs d'émissions
     facteurs = {
-        'voiture': 0.218,
-        'moto': 0.191,
-        'avions': 0.188,
-        'voitures_e': 0.103,
-        'train': 0.003
+        'Voiture': 0.218,
+        'Voitures_electrique': 0.103,
+        'Train': 0.003,
+        'Bus' : 0.113,
     }
 
     # vérifie si le vehicule est bien dans la liste des facteurs
@@ -53,5 +52,4 @@ def calcul_emission(Voyager):
     Voyager.emission = Voyager.distance_parcourue * facteurs[Voyager.vehicule]
 
     return Voyager.emission
-
-print(f"The emission for a {Voyager.vehicule} traveling {Voyager.distance_parcourue} km is {Voyager.emission} kg of CO2.")
+    print(f"The emission for a {Voyager.vehicule} traveling {Voyager.distance_parcourue} km is {Voyager.emission} kg of CO2.")
