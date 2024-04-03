@@ -9,9 +9,9 @@ class Camping(Document):
     code_postale = fields.StringField(required=True)
     ville = fields.StringField(required=True)
     pays = fields.StringField(required=True)
-    emission_total = fields.StringField(required=True)
-    longitude = fields.StringField(required=True)
-    latitude = fields.StringField(required=True)
+    emission_total = fields.StringField()
+    longitude = fields.StringField()
+    latitude = fields.StringField()
 
 class Adresses_campings(Document):
     id_Adresses = fields.StringField(required=True, max_length=200)
@@ -24,16 +24,30 @@ class Client(Document):
     code_postal = fields.StringField(required=True, max_length=200)
     ville = fields.StringField(required=True, max_length=200)
     pays = fields.StringField(required=True, max_length=200)
-    longitude = fields.StringField(required=True, max_length=200)
-    latitude = fields.StringField(required=True, max_length=200)
+    longitude = fields.StringField(max_length=200)
+    latitude = fields.StringField(max_length=200)
 
 class Voyager(Document):
-    emission = fields.models.FloatField(required=True)
+    emission = fields.FloatField()
     vehicule = fields.StringField(required=True, choices=[('voiture','Voiture'),('train','Train'),('bus','Bus'),('voitures_e','Voitures_electrique')], default='voiture')
-    distance_parcourue = fields.models.FloatField(required=True)
+    distance_parcourue = fields.FloatField()
     id_client = fields.StringField(required=True, max_length=200)
     id_camping = fields.StringField(required=True, max_length=200)
 
+def geolocalisation():
+    import requests
+
+    cityA = 'london'
+    countryA = 'England'
+    #cityB = 'paris'
+    #countryB = 'France'
+    api_url = 'https://api.api-ninjas.com/v1/geocoding?city={}'.format(cityA)
+    response = requests.get(api_url + cityA, headers={'X-Api-Key': 'K0GT04G2qpStMa1CYV7M6g==0hS5e7OrqiBqixgJ'})
+    if response.status_code == requests.codes.ok:
+        print(response.text)
+    else:
+        print("Error:", response.status_code, response.text)
+    return response.text
 
 def calcul_emission(Voyager):
     # définis les facteurs d'émissions
@@ -52,5 +66,7 @@ def calcul_emission(Voyager):
     Voyager.emission = Voyager.distance_parcourue * facteurs[Voyager.vehicule]
 
     return Voyager.emission
+    print(f"The emission for a {Voyager.vehicule} traveling {Voyager.distance_parcourue} km is {Voyager.emission} kg of CO2.")
 
-print(f"The emission for a {Voyager.vehicule} traveling {Voyager.distance_parcourue} km is {Voyager.emission} kg of CO2.")
+
+geolocalisation()
