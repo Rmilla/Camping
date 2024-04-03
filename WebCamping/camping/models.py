@@ -33,6 +33,7 @@ class Voyager(Document):
     distance_parcourue = fields.FloatField()
     id_client = fields.StringField(required=True, max_length=200)
     id_camping = fields.StringField(required=True, max_length=200)
+
     année = fields.DateField(required=True)
 
 def calcul_emission(Voyager):
