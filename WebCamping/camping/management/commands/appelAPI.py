@@ -3,7 +3,7 @@ import requests
 import googlemaps
 
 class Command(BaseCommand):
-    def api():
+    def handle(self, *args, **options):
         # remplir avec votre clé API Google Maps
         gmaps = googlemaps.Client(key='AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk')
 
@@ -15,7 +15,6 @@ class Command(BaseCommand):
         #afficher le résultat
         print(distance)
 
-    api()
     #def geolocalisation():
     #    city = 'london'
     #    api_url = 'https://api.api-ninjas.com/v1/geocoding?city='+city+''
