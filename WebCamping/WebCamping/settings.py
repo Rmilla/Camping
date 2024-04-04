@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'django-mongoengine'
+    'django-mongoengine',
     'django-mongoengine.mongo_auth',
     'django_mongoengine.mongo_admin',
     "rest_framework.authtoken",
