@@ -14,27 +14,27 @@ class Camping(Document):
     latitude = fields.StringField()
 
 class Adresses_campings(Document):
-    id_Adresses = fields.StringField(required=True, max_length=200)
-    Adresse_complète = fields.StringField(required=True, max_length=200)
-    Pays = fields.StringField(required=True, max_length=200)
+    id_Adresses = fields.StringField(max_length=200)
+    Adresse_complète = fields.StringField(max_length=200)
+    Pays = fields.StringField(max_length=200)
 
 class Client(Document):
-    id_client = fields.StringField(required=True, max_length=200)
-    adress = fields.StringField(required=True, max_length=200)
-    code_postal = fields.StringField(required=True, max_length=200)
-    ville = fields.StringField(required=True, max_length=200)
-    pays = fields.StringField(required=True, max_length=200)
+    id_client = fields.StringField(max_length=200)
+    adress = fields.StringField(max_length=200)
+    code_postal = fields.StringField(max_length=200)
+    ville = fields.StringField(max_length=200)
+    pays = fields.StringField(max_length=200)
     longitude = fields.StringField(max_length=200)
     latitude = fields.StringField(max_length=200)
 
 class Voyager(Document):
     emission = fields.FloatField()
-    vehicule = fields.StringField(required=True, choices=[('voiture','Voiture'),('train','Train'),('bus','Bus'),('voitures_e','Voitures_electrique')], default='voiture')
+    vehicule = fields.StringField(choices=[('voiture','Voiture'),('train','Train'),('bus','Bus'),('voitures_e','Voitures_electrique')], default='voiture')
     distance_parcourue = fields.FloatField()
-    id_client = fields.StringField(required=True, max_length=200)
-    id_camping = fields.StringField(required=True, max_length=200)
+    id_client = fields.StringField(max_length=200)
+    id_camping = fields.StringField(max_length=200)
 
-    année = fields.DateField(required=True)
+    année = fields.DateField()
 
 def calcul_emission(Voyager):
     # définis les facteurs d'émissions
