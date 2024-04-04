@@ -3,12 +3,12 @@ from mongoengine import Document, fields
 # Créations des modèles.
 
 class Camping(Document):
-    id_camping = fields.StringField(required=True, max_length=200)
-    id_Adresses = fields.StringField(required=True, max_length=200)
-    nom = fields.StringField(required=True, max_length=200)
-    code_postale = fields.StringField(required=True)
-    ville = fields.StringField(required=True)
-    pays = fields.StringField(required=True)
+    id_camping = fields.StringField(rmax_length=200)
+    id_Adresses = fields.StringField(max_length=200)
+    nom = fields.StringField(max_length=200)
+    code_postale = fields.StringField()
+    ville = fields.StringField()
+    pays = fields.StringField()
     emission_total = fields.StringField()
     longitude = fields.StringField()
     latitude = fields.StringField()
