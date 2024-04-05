@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 import environ
-import mongoengine
+import django_mongoengine
+from mongoengine import *
+from mongo_auth import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,7 +36,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1"]
 
 # MongoDB settings
-MONGODB_DATABASES = {"default": {"name": "django_mongoengine"}}
+#MONGODB_DATABASES = {"default": {"name": "django_mongoengine"}}
 
 # Application definition
 
@@ -46,19 +48,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'django-mongoengine',
-    'django-mongoengine.mongo_auth',
-    'django_mongoengine.mongo_admin',
+    'mongoengine',
+    'mongo_auth',
+    #'django-mongodb-engine',
+    #'mongoengine.mongo_admin',
     "rest_framework.authtoken",
     "django_filters",
     "camping",
     "admin_honeypot",
-    "axes",
+    "axes",   
 ]
 
 AUTH_USER_MODEL = 'mongo_auth.MongoUser'
 
-AUTHENTICATION_BACKENDS = ("django_mongoengine.mongo_auth.backends.MongoEngineBackend",)
+AUTHENTICATION_BACKENDS = ('mongoengine.django.auth.MongoEngineBackend',)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -114,10 +117,12 @@ MONGODB_DATABASES = {
     },
 }
 
-SESSION_ENGINE="django_mongoengine.sessions.SessionStore"
+SESSION_ENGINE='django_mongoengine.sessions'
 #Not sur if this is correct or if it is necessary to use "django_mongoengine.sessions" instead
 #as in the github of mongoengine
+SESSION_SERIALIZER = 'django_mongoengine.sessions.BSONSerializer'
 INSTALLED_APPS += ["django_mongoengine"]
+
 
 
 # Password validation
