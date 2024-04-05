@@ -104,11 +104,12 @@ WSGI_APPLICATION = 'WebCamping.wsgi.application'
 
 MONGODB_DATABASES = {
     "default": {
-        "name": "TestCamping",
+        "name": env("MONGODB_DATABASE"),
         "host": env("MONGODB_HOST"),
         "port": env("MONGODB_PORT"),
-        "password": env("MONGODB_PASSWORD"),
         "username": env("MONGODB_USERNAME"),
+        "password": env("MONGODB_PASSWORD"),
+        "authentication_source": "admin",
         "tz_aware": True, # if you using timezones in django (USE_TZ = True)
     },
 }
