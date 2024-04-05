@@ -51,6 +51,5 @@ def calcul_emission(Voyager):
 
     # Calcule le taux d'émissions
     Voyager.emission = Voyager.distance_parcourue * facteurs[Voyager.vehicule]
-
-    return Voyager.emission
     print(f"The emission for a {Voyager.vehicule} traveling {Voyager.distance_parcourue} km is {Voyager.emission} kg of CO2.")
+    return Voyager.emission

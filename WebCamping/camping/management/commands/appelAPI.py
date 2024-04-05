@@ -1,22 +1,20 @@
 from django.core.management.base import BaseCommand, CommandError
 import requests
 import googlemaps
-from datetime import datetime
 
 class Command(BaseCommand):
-    def api():
-        now = datetime.now()
+    def handle(self, *args, **options):
         # remplir avec votre clé API Google Maps
         gmaps = googlemaps.Client(key='AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk')
 
         directions_result = gmaps.directions("Sydney Town Hall",
                                             "Parramatta, NSW",
                                             mode="driving",)
-        #afficher le résultat
+        #stock la distance dans une variable.
         distance = directions_result[0]['legs'][0]['distance']['text']
+        #afficher le résultat
         print(distance)
 
-    
     #def geolocalisation():
     #    city = 'london'
     #    api_url = 'https://api.api-ninjas.com/v1/geocoding?city='+city+''
@@ -35,6 +33,6 @@ class Command(BaseCommand):
     #    response = requests.request("GET", url, headers=headers)
     #    print(response.text.encode('utf8'))
     
-    api()
+   
     #geolocalisation()
     #calculDistance()
