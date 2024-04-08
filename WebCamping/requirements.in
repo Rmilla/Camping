@@ -1,13 +1,10 @@
 Django==3.0
-django-mongoengine
-mongoengine==0.28.2
+mongoengine==0.9.0
 django-environ
-djangorestframework==3.*
+djangorestframework
 django-filter
 markdown
-requests
-blinker==1.*
-pymongo
+
 # Security
 django-axes
 django-admin-honeypot-updated-2021
