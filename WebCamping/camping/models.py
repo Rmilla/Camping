@@ -1,4 +1,3 @@
-from django.db import models
 from mongoengine import Document, fields
 # Créations des modèles.
 
