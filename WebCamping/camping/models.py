@@ -1,4 +1,5 @@
 from django.db import models
+import mongoengine
 from mongoengine import Document, fields
 # Créations des modèles.
 
@@ -33,7 +34,6 @@ class Voyager(Document):
     distance_parcourue = fields.FloatField()
     id_client = fields.StringField(max_length=200)
     id_camping = fields.StringField(max_length=200)
-
     année = fields.DateField()
 
 def calcul_emission(Voyager):

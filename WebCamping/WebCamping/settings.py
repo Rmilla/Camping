@@ -15,7 +15,7 @@ from pathlib import Path
 import os
 import environ
 from mongoengine import *
- 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
  
@@ -35,21 +35,21 @@ DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1"]
  
 # MongoDB settings
- 
+
 disconnect()
 """""
 def test_connection():
     # Replace <your_connection_string> with your actual MongoDB Atlas connection string
     connection_string = "mongodb+srv://camping:SqP6B8wLx62DsUf6@cluster0.l5yaw7u.mongodb.net/TestCamping"
- 
+
     try:
         # Connect to MongoDB Atlas using mongoengine
         connect(host=connection_string)
- 
+
         print("Connection to MongoDB Atlas using mongoengine successful!")
     except Exception as e:
         print(f"Failed to connect to MongoDB Atlas using mongoengine: {e}")
- 
+        
 if __name__ == "__main__":
     test_connection()
 """
@@ -60,12 +60,12 @@ MONGODB_DATABASES = {
         "host": "cluster0.l5yaw7u.mongodb.net",
         "port": 27017,
         "username": "camping",
-        "password": "",
+        "password": "SqP6B8wLx62DsUf6",
         "authentication_source": "admin",
         #"alias": "mydb",
     },
 }
- 
+
 """
 USERNAME = env("USERNAME")
 MONGODB_DATABASES = {
@@ -78,15 +78,15 @@ MONGODB_DATABASES = {
         "tz_aware": True, # if you using timezones in django (USE_TZ = True)
     },
 }
- 
+
 #PASSWORD = env("PASSWORD")
 #HOST = env("HOST")
 #mongoengine.connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/",
 #                    username=USERNAME, password="SqP6B8wLx62DsUf6")
 """
- 
+
 #DATABASES = {"default": {"ENGINE": "django.db.backends.dummy"}}
- 
+
 # Application definition
  
 INSTALLED_APPS = [
@@ -96,11 +96,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     #'rest_framework',
     'django_mongoengine',
-    #'mongoengine.mongo_admin',
-    #'django_mongoengine.mong_auth',
-    'django_mongoengine.mongo_admin',
+    #'mongoengine.contrib.admin',
+    'django_mongoengine.mongo_auth',
+    #'django_mongoengine.mongo_admin',
     #"rest_framework.authtoken",
     #"django_filters",
     "camping",
@@ -145,17 +146,17 @@ WSGI_APPLICATION = 'WebCamping.wsgi.application'
  
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
- 
- 
- 
+
+
+
 #SESSION_ENGINE='django_mongoengine.sessions'
 #Not sur if this is correct or if it is necessary to use "django_mongoengine.sessions" instead
 #as in the github of mongoengine
 #SESSION_SERIALIZER = 'django_mongoengine.sessions.BSONSerializer'
 #INSTALLED_APPS += ["django_mongoengine"]
- 
- 
- 
+
+
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
  

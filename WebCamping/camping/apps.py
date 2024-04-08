@@ -1,5 +1,6 @@
 from django.apps import AppConfig
-from mongoengine import connect
+#from mongoengine import connect
+import mongoengine
 import environ
 from pathlib import Path
 import os
@@ -25,5 +26,5 @@ class CampingConfig(AppConfig):
     def ready(self):
         # Define the MongoDB connection settings
         # Connect to MongoDB
-        connect(db=DATABASE, username=USERNAME,password=PASSWORD,host=HOST,port=PORT, alias="db")
-        
+        #connect(db=DATABASE, username=USERNAME,password=PASSWORD,host=HOST,port=PORT, alias="db")
+        pass
