@@ -1,8 +1,12 @@
 Django==3.0
+django-mongoengine
+mongoengine==0.28.2
+mongo_auth
 mongoengine==0.9.0
 django-environ
 djangorestframework
 django-filter
+django-mongo-auth
 markdown
 
 # Security
@@ -10,3 +14,4 @@ django-axes
 django-admin-honeypot-updated-2021
 django-cors-middleware
 django-cors-headers
+django_mongoengine
