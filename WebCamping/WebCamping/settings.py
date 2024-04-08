@@ -109,9 +109,9 @@ INSTALLED_APPS = [
     #"axes",   
 ]
  
-#AUTH_USER_MODEL = 'mongo_auth.MongoUser'
+AUTH_USER_MODEL = 'mongo_auth.MongoUser'
  
-#AUTHENTICATION_BACKENDS = ('mongoengine.django.auth.MongoEngineBackend',)
+AUTHENTICATION_BACKENDS = ('mongoengine.django.auth.MongoEngineBackend',)
  
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
