@@ -3,13 +3,13 @@ from mongoengine import Document, fields
 import json
 # Créations des modèles.
 
-def vehicule():
-    with open('.vehicle_emissions.json', 'r') as file:
+def donnees_vehicule():
+    with open('C:/Projets/Stage/Camping/WebCamping/camping/vehicle_emissions.json', 'r') as file:
         data = json.load(file)
     return data
 
-emissions = vehicule()
-vehicules = [vehicule.keys()]
+emissions = donnees_vehicule()
+vehicules = [set(emissions.keys())]
 
 class Camping(Document):
     id_camping = fields.StringField(rmax_length=200)
@@ -47,15 +47,10 @@ class Voyager(Document):
 
 def calcul_emission(Voyager):
     # définis les facteurs d'émissions
-    facteurs = {
-        'Voiture': 0.218,
-        'Voitures_electrique': 0.103,
-        'Train': 0.003,
-        'Bus' : 0.113,
-    }
+    facteurs = donnees_vehicule()
 
     # vérifie si le vehicule est bien dans la liste des facteurs
-    if Voyager.vehicule not in facteurs:
+    if Voyager.vehicule not in vehicules:
         raise ValueError(f"Vehicule type '{Voyager.vehicule}' is not supported.")
 
     # Calcule le taux d'émissions
