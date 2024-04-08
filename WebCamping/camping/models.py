@@ -1,7 +1,15 @@
 from django.db import models
-import mongoengine
 from mongoengine import Document, fields
+import json
 # Créations des modèles.
+
+def donnees_vehicule():
+    with open('C:/Projets/Stage/Camping/WebCamping/camping/vehicle_emissions.json', 'r') as file:
+        data = json.load(file)
+    return data
+
+emissions = donnees_vehicule()
+vehicules = [set(emissions.keys())]
 
 class Camping(Document):
     id_camping = fields.StringField(rmax_length=200)
@@ -30,23 +38,19 @@ class Client(Document):
 
 class Voyager(Document):
     emission = fields.FloatField()
-    vehicule = fields.StringField(choices=[('voiture','Voiture'),('train','Train'),('bus','Bus'),('voitures_e','Voitures_electrique')], default='voiture')
+    vehicule = fields.StringField(choices=vehicules, default='voiture')
     distance_parcourue = fields.FloatField()
     id_client = fields.StringField(max_length=200)
     id_camping = fields.StringField(max_length=200)
     année = fields.DateField()
 
+
 def calcul_emission(Voyager):
     # définis les facteurs d'émissions
-    facteurs = {
-        'Voiture': 0.218,
-        'Voitures_electrique': 0.103,
-        'Train': 0.003,
-        'Bus' : 0.113,
-    }
+    facteurs = donnees_vehicule()
 
     # vérifie si le vehicule est bien dans la liste des facteurs
-    if Voyager.vehicule not in facteurs:
+    if Voyager.vehicule not in vehicules:
         raise ValueError(f"Vehicule type '{Voyager.vehicule}' is not supported.")
 
     # Calcule le taux d'émissions
