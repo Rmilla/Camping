@@ -1,19 +1,32 @@
 from django.core.management.base import BaseCommand, CommandError
 import requests
 import googlemaps
-
+import csv
+import itertools
 class Command(BaseCommand):
-    def handle(self, *args, **options):
         # remplir avec votre clé API Google Maps
         gmaps = googlemaps.Client(key='AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk')
-
+        csv_file_path ='Fakedata.csv'
+        #def add_arguments(self, parser):
+        #    parser.add_argument(csv_file_path, type=str, help='Path to the CSV file')
+        
+        def handle(self,*args,**kwargs):
+            #csv_file_path =kwargs[Fakedata.csv]
+            print(self.csv_file_path)
+            def read_parts(csv_file_path):
+                with open(csv_file_path,'r',encoding='ISO-8859-1') as file:
+                    reader = csv.DictReader(file)
+                    for row in reader:
+                        print(row)
+            read_parts(self.csv_file_path)
+        
         directions_result = gmaps.directions("Sydney Town Hall",
                                             "Parramatta, NSW",
                                             mode="driving",)
         #stock la distance dans une variable.
         distance = directions_result[0]['legs'][0]['distance']['text']
         #afficher le résultat
-        print(distance)
+        #print(distance)
 
     #def geolocalisation():
     #    city = 'london'
