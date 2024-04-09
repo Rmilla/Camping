@@ -11,7 +11,19 @@ class Command(BaseCommand):
         #    parser.add_argument(csv_file_path, type=str, help='Path to the CSV file')
         
         def handle(self,*args,**kwargs):
-            #csv_file_path =kwargs[Fakedata.csv]
+            
+            def read_line_csv(csv_file_path, begin, end ):
+                with open(csv_file_path, 'r', newline='', encoding='ISO-8859-1') as file:
+                    reader = csv.DictReader(file, delimiter=';')
+                    for _ in range(begin):
+                        next(reader)
+                    return list(itertools.islice(reader, end-begin))
+            for line in range(0, 901, 100):
+                part = read_line_csv(self.csv_file_path, line, line+100)
+                print('***************************************************************')
+                print(part)
+            
+            """""
             print(self.csv_file_path)
             def read_parts(csv_file_path):
                 with open(csv_file_path,'r',encoding='ISO-8859-1') as file:
