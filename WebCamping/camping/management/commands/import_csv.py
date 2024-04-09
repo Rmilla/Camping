@@ -19,9 +19,10 @@ class Command(BaseCommand):
                     for _ in range(begin):
                         next(reader)
                     return list(itertools.islice(reader, end-begin))
-            for line in range(0, 1001, 100):
-                part1 = read_line_csv(self.csv_file_path, 1, 100)
-                print(part1)
+            for line in range(0, 901, 100):
+                part = read_line_csv(self.csv_file_path, line, line+100)
+                print('***************************************************************')
+                print(part)
             
             """""
             print(self.csv_file_path)
