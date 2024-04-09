@@ -6,7 +6,7 @@ import itertools
 class Command(BaseCommand):
         # remplir avec votre clé API Google Maps
         #gmaps = googlemaps.Client(key='AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk')
-        csv_file_path ='Fakedata.csv'
+        csv_file_path ='Camping/WebCamping/Fakedata.csv'
         #def add_arguments(self, parser):
         #    parser.add_argument(csv_file_path, type=str, help='Path to the CSV file')
         
@@ -18,8 +18,8 @@ class Command(BaseCommand):
                     for _ in range(begin):
                         next(reader)
                     return list(itertools.islice(reader, end-begin))
-            for line in range(0, 1001, 100):
-                part1 = read_line_csv(self.csv_file_path, 1, 100)
+            for line in range(1, 1001, 100):
+                part1 = read_line_csv(self.csv_file_path, line, line+100)
                 print(part1)
             
 """""
@@ -63,5 +63,5 @@ class Command(BaseCommand):
    
     geolocalisation()
     calculDistance()
-    
+
 """""
