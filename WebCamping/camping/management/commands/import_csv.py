@@ -19,30 +19,23 @@ class Command(BaseCommand):
                     for _ in range(begin):
                         next(reader)
                     return list(itertools.islice(reader, end-begin))
-            for line in range(0, 901, 100):
+            for line in range(0, 903, 100):
                 part = read_line_csv(self.csv_file_path, line, line+100)
                 print('***************************************************************')
-                print(part)
-            
-            """""
-            print(self.csv_file_path)
-            def read_parts(csv_file_path):
-                with open(csv_file_path,'r',encoding='ISO-8859-1') as file:
-                    reader = csv.DictReader(file, delimiter=';')
-                    i=1
-                    for row in reader:
-                        print(i)
-                        print(row)
-                        i=i+1
-            read_parts(self.csv_file_path)
-            """
+                for i in range(0,100):
+                    name_camping = part[i]["camping"].split(sep='/')[0]
+                    camping_postal_adress = part[i]["camping"].split(sep='/')[1]
+                    country_camping = part[i]["camping"].split(sep='/')[3].strip()
+                    country_client = part[i]["Country"]
+                    city = part[i]["City"].split(sep=" ")[0]
+                    year = part[i]["Year"]
+                    transport = part[i]["Transport"]
+
         directions_result = gmaps.directions("Sydney Town Hall",
                                             "Parramatta, NSW",
                                             mode="driving",)
         #stock la distance dans une variable.
         distance = directions_result[0]['legs'][0]['distance']['text']
-        #afficher le résultat
-        #print(distance)
 
     #def geolocalisation():
     #    city = 'london'
