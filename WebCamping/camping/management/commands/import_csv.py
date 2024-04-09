@@ -15,9 +15,12 @@ class Command(BaseCommand):
             print(self.csv_file_path)
             def read_parts(csv_file_path):
                 with open(csv_file_path,'r',encoding='ISO-8859-1') as file:
-                    reader = csv.DictReader(file)
+                    reader = csv.DictReader(file, delimiter=';')
+                    i=1
                     for row in reader:
+                        print(i)
                         print(row)
+                        i=i+1
             read_parts(self.csv_file_path)
         
         directions_result = gmaps.directions("Sydney Town Hall",
