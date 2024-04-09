@@ -2,9 +2,9 @@ from django.db import models
 from mongoengine import Document, fields
 import json
 # Créations des modèles.
-
+json_file_path = 'C:/Users/sabat/Documents/Diginamic/Stage/CampingBack/Camping/WebCamping/camping/vehicle_emissions.json'
 def donnees_vehicule():
-    with open('C:/Projets/Stage/Camping/WebCamping/camping/vehicle_emissions.json', 'r') as file:
+    with open(json_file_path, 'r') as file:
         data = json.load(file)
     return data
 

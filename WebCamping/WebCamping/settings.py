@@ -15,6 +15,7 @@ from pathlib import Path
 import os
 import environ
 from mongoengine import *
+from django_mongoengine import mongo_admin
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
