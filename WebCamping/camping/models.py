@@ -5,7 +5,6 @@ import json
 json_file_path = 'file_path_of_json_file.json'
 def donnees_vehicule():
     with open(json_file_path, 'r') as file:
-    with open(json_file_path, 'r') as file:
         data = json.load(file)
     return data
 
