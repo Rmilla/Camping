@@ -1,15 +1,28 @@
 from django.db import models
-from mongoengine import Document, fields
+from django_mongoengine import Document, EmbeddedDocument, fields
 import json
 import os
+# # Créations des modèles.
+# json_file_path = os.path.join('C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack\\Camping\\WebCamping\\camping', 'vehicle_emissions.json')
+# def donnees_vehicule():
+#     with open(json_file_path, 'r') as file:
+#         data = json.load(file)
+#     return data
+# emissions = donnees_vehicule()
+# vehicules = [tuple(emissions.keys())]
+class Row(Document):
+    name_camping = fields.StringField(max_length=255)
+    adress_camping = fields.StringField(max_length=255)
+    city = fields.StringField(max_length=255)
+    country_camping = fields.StringField(max_length=255)
+    client_country = fields.StringField(max_length=255)
+    client_city = fields.StringField(max_length=255)
+    year = fields.IntField()
+    transport_mode = fields.StringField(max_length=255)
+    distance = fields.FloatField()
+    emission_total = fields.DecimalField(max_digits=5, decimal_places=2)
 
-# Obtenir le chemin du répertoire du script en cours d'exécution
-
-
-# Construire le chemin relatif vers le fichier Fakedata.csv
-json_file_path = 'C:/Projets/Stage/Camping/WebCamping/camping/vehicle_emissions.json'
-
-
+json_file_path = 'C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack\\Camping\\WebCamping\\camping\\vehicle_emissions.json'
 def donnees_vehicule():
     with open(json_file_path, 'r') as file:
         data = json.load(file)
