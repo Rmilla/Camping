@@ -23,17 +23,23 @@ class Command(BaseCommand):
         response = requests.get(base_url, params=params)
         if response.status_code == 200:
             data = response.json()
+            # print(f"Type des données renvoyées : {type(data)}")
+            # print(f"Données brutes : {data}")
             if data["status"] == "OK":
-                distance = data["rows"][0]["elements"][0]["distance"]["text"].split(
-                    " "
-                )[0]
-                return distance
+                #print(data["rows"][0]["elements"][0])
+                if data["rows"][0]["elements"][0] == {'status' : 'NOT_FOUND'} or data["rows"][0]["elements"][0] == {'status' : 'ZERO_RESULTS'}:
+                    return "PROBLEM" 
+                else:
+                    distance = data["rows"][0]["elements"][0]["distance"]["text"].split(" ")[0]
+                    return distance
             else:
                 print("Request failed.")
-                return None
+                print(response)
+                return 'PROBLEM'
         else:
             print("Failed to make the request.")
-            return None
+            print(response)
+            return 'PROBLEM'
 
     csv_file_path = "Fakedata.csv"
 
@@ -46,11 +52,12 @@ class Command(BaseCommand):
                 for _ in range(begin):
                     next(reader)
                 return list(itertools.islice(reader, end - begin))
-
-        for line in range(0, 103, 100):
+        j=1
+        for line in range(0, 903, 100):
             part = read_line_csv(self.csv_file_path, line, line + 100)
-            # print('***************************************************************')
             for i in range(0, 100):
+                print(f"Enregistrement {j}")
+                j=j+1
                 name_camping = part[i]["camping"].split(sep="/")[0]
                 camping_postal_adress = part[i]["camping"].split(sep="/")[1]
                 camping_city = part[i]["camping"].split(sep="/")[2]
@@ -62,7 +69,9 @@ class Command(BaseCommand):
                     APItransport = "transit"
                     distance = self.get_dist(
                         API_KEY, city_client, camping_city, APItransport)
-                    if "," in distance:
+                    if distance == 'PROBLEM':
+                        continue
+                    elif "," in distance:
                         distance = float(distance.replace(",", "."))*1000
                     else:
                         distance = float(distance)
@@ -72,8 +81,10 @@ class Command(BaseCommand):
                     APItransport = "driving"
                     transport_em = 0.103
                     distance = self.get_dist(
-                        API_KEY, city_client, camping_city, APItransport)                 
-                    if "," in distance:
+                        API_KEY, city_client, camping_city, APItransport)
+                    if distance == 'PROBLEM':
+                        continue                
+                    elif "," in distance:
                         distance = float(distance.replace(",", "."))*1000
                     else:
                         distance = float(distance)
@@ -83,7 +94,9 @@ class Command(BaseCommand):
                     distance = self.get_dist(
                         API_KEY, city_client, camping_city, APItransport
                     )
-                    if "," in distance:
+                    if distance == 'PROBLEM':
+                        continue
+                    elif "," in distance:
                         distance = float(distance.replace(",", "."))*1000
                     else:
                         distance = float(distance)
@@ -94,13 +107,15 @@ class Command(BaseCommand):
                     distance = self.get_dist(
                         API_KEY, city_client, camping_city, APItransport
                     )
-                    if "," in distance:
+                    if distance == 'PROBLEM':
+                        continue
+                    elif "," in distance:
                         distance = float(distance.replace(",", "."))*1000
                     else:
                         distance = float(distance)
                     transport_em = 0.113
                     emission_total = transport_em * distance
-                print(f"Nom du camping : {name_camping}, Ville du camping : {camping_city}, Ville du client : {country_client}, Année : {year} , Mode de Transport : {part[i]["Transport"]}")
+                print(f"Nom du camping : {name_camping}, Ville du camping : {camping_city}, Ville du client : {city_client}, Année : {year} , Mode de Transport : {part[i]["Transport"]}")
                 print(f"Distance : {distance}, Type de la distance : {type(distance)}")
                 row_object = Row(
                     name_camping=name_camping,
