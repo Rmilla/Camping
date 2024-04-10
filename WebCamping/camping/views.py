@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
+from django.http import JsonResponse
+from rest_framework.decorators import action
 from rest_framework_mongoengine.serializers import DocumentSerializer
 from rest_framework import serializers
 from .models import Camping
@@ -26,9 +29,6 @@ class CampingViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
     #filterset_class = ClubFilters
-
-class CampingViewSet(ModelViewSet):
-    serializer_class = CampingSerializer
 
     def get_queryset(self):
         return Camping.objects.all()

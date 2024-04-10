@@ -1,5 +1,5 @@
 from django.db import models
-from django_mongoengine import Document, EmbeddedDocument, fields
+from mongoengine import Document, EmbeddedDocument, fields
 import json
 import os
 # # Créations des modèles.
