@@ -3,13 +3,12 @@ import requests
 import googlemaps
 import csv
 import itertools
-
-
+import responses
 class Command(BaseCommand):
-        
-        # Obtenir le chemin du répertoire du script en cours d'exécution
-
-        csv_file_path ='C:/Projets/Stage/Camping/WebCamping/Fakedata.csv'
+        # remplir avec votre clé API Google Maps
+        API_KEY='AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk'
+        gmaps = googlemaps.Client(key='AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk')
+        csv_file_path ='Fakedata.csv'
         #def add_arguments(self, parser):
         #    parser.add_argument(csv_file_path, type=str, help='Path to the CSV file')
         
@@ -29,17 +28,17 @@ class Command(BaseCommand):
                 for i in range(0,100):
                     name_camping = part[i]["camping"].split(sep='/')[0]
                     camping_postal_adress = part[i]["camping"].split(sep='/')[1]
-                    country_camping = part[i]["camping"].split(sep='/')[3].strip()
+                    country_camping = part[i]["camping"].split(sep='/')[3]
                     country_client = part[i]["Country"]
                     city = part[i]["City"].split(sep=" ")[0]
                     year = part[i]["Year"]
                     transport = part[i]["Transport"]
-
-            directions_result = gmaps.directions("Sydney Town Hall",
-                                         "Parramatta, NSW",
-                                         mode="driving",)
-            #stock la distance dans une variable.
-            distance = directions_result[0]['legs'][0]['distance']['text']
+                    print()
+        # directions_result = gmaps.directions("Sydney Town Hall",
+        #                                     "Parramatta, NSW",
+        #                                     mode="driving",)
+        #stock la distance dans une variable.
+        # distance = directions_result[0]['legs'][0]['distance']['text']
 
     # def geolocalisation():
     #     city = 'london'

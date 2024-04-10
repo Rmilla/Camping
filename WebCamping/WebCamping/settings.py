@@ -98,11 +98,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    #'rest_framework',
+    'rest_framework',
     'django_mongoengine',
     #'mongoengine.contrib.admin',
     'django_mongoengine.mongo_auth',
-    #'django_mongoengine.mongo_admin',
+    'django_mongoengine.mongo_admin',
     #"rest_framework.authtoken",
     #"django_filters",
     "camping",
