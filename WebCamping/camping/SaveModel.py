@@ -20,6 +20,7 @@ print(vehicules)
 
 class Camping(Document):
     id_camping = fields.StringField(rmax_length=200)
+    id_Adresses = fields.StringField(max_length=200)
     nom = fields.StringField(max_length=200)
     code_postale = fields.StringField()
     ville = fields.StringField()
@@ -46,6 +47,8 @@ class Voyager(Document):
     emission = fields.FloatField()
     vehicule = fields.StringField(choices=vehicules, default='voiture')
     distance_parcourue = fields.FloatField()
+    id_client = fields.StringField(max_length=200)
+    id_camping = fields.StringField(max_length=200)
     année = fields.DateField()
 
 
