@@ -1,15 +1,22 @@
 from django.db import models
 from mongoengine import Document, fields
 import json
-# Créations des modèles.
-json_file_path = 'file_path_of_json_file.json'
+import os
+
+# Obtenir le chemin du répertoire du script en cours d'exécution
+
+
+# Construire le chemin relatif vers le fichier Fakedata.csv
+json_file_path = 'C:/Projets/Stage/Camping/WebCamping/camping/vehicle_emissions.json'
+
+
 def donnees_vehicule():
     with open(json_file_path, 'r') as file:
         data = json.load(file)
     return data
-
 emissions = donnees_vehicule()
 vehicules = [set(emissions.keys())]
+print(vehicules)
 
 class Camping(Document):
     id_camping = fields.StringField(rmax_length=200)
