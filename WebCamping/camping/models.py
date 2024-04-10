@@ -25,8 +25,6 @@ class Camping(Document):
     ville = fields.StringField()
     pays = fields.StringField()
     emission_total = fields.StringField()
-    longitude = fields.StringField()
-    latitude = fields.StringField()
 
 class Adresses_campings(Document):
     id_Adresses = fields.StringField(max_length=200)
@@ -39,8 +37,6 @@ class Client(Document):
     code_postal = fields.StringField(max_length=200)
     ville = fields.StringField(max_length=200)
     pays = fields.StringField(max_length=200)
-    longitude = fields.StringField(max_length=200)
-    latitude = fields.StringField(max_length=200)
 
 class Voyager(Document):
     emission = fields.FloatField()
