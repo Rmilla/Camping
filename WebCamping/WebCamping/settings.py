@@ -104,7 +104,7 @@ INSTALLED_APPS = [
     'django_mongoengine.mongo_auth',
     'django_mongoengine.mongo_admin',
     #"rest_framework.authtoken",
-    #"django_filters",
+    "django_filters",
     "camping",
     #"admin_honeypot",
     #"axes",   
