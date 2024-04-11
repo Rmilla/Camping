@@ -4,7 +4,7 @@ import googlemaps
 import csv
 import itertools
 import mongoengine
-from camping.models import Row
+from camping.models import Flat, Camping, Client, Trip
 
 
 class Command(BaseCommand):
@@ -117,7 +117,7 @@ class Command(BaseCommand):
                     emission_total = transport_em * distance
                 print(f"Nom du camping : {name_camping}, Ville du camping : {camping_city}, Ville du client : {city_client}, Année : {year} , Mode de Transport : {part[i]["Transport"]}")
                 print(f"Distance : {distance}, Type de la distance : {type(distance)}")
-                row_object = Row(
+                row_object = Flat(
                     name_camping=name_camping,
                     adress_camping=camping_postal_adress,
                     city=camping_city,
@@ -130,6 +130,26 @@ class Command(BaseCommand):
                     emission_total=emission_total,
                 )
                 row_object.save()
+                
+                camping_object = Camping(
+                    camping_name = name_camping,
+                    camping_city = camping_city,
+                    camping_country = country_camping,
+                )
+                camping_object.save()
+                client_object= Client(
+                    client_city = city_client,
+                    client_country = country_client,
+                )                
+                client_object.save()
+                trip_object = Trip(
+                    emissions = emission_total,
+                    vehicle = part[i]["Transport"],
+                    distance = distance,
+                    year = year,
+                )
+                trip_object.save()
+                
         # directions_result = gmaps.directions("Sydney Town Hall",
         #                                     "Parramatta, NSW",
         #                                     mode="driving",)
