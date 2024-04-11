@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_mongoengine.routers import DefaultRouter
-from camping.views.camping import CampingViewSet 
+from Camping.WebCamping.camping.views.camping_view import CampingViewSet 
 
 router = DefaultRouter()
 router.register(r'campings', CampingViewSet)

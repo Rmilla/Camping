@@ -4,17 +4,17 @@ from django.http import JsonResponse
 from rest_framework.decorators import action
 from rest_framework_mongoengine.serializers import DocumentSerializer
 from rest_framework import viewsets, permissions
-from ..models import Camping
-from camping.serializer.camping import CampingSerializer
+from ..models import Client
+from Camping.WebCamping.camping.serializer.client_serializer import ClientSerializer   
 
 # Create your views here.
-
-class CampingViewSet(viewsets.ModelViewSet):
-    queryset = Camping.objects.all()
-    serializer_class = CampingSerializer
+   
+class ClientViewSet(viewsets.ModelViewSet):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
     #filterset_class = ClubFilters
 
     def get_queryset(self):
-        return Camping.objects.all()
+        return Client.objects.all()
