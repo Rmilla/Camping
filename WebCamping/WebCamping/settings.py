@@ -56,7 +56,7 @@ if __name__ == "__main__":
 """
 #MONGODB_DATABASES = {"default": {"name": "django_mongoengine"}}
 MONGODB_DATABASES = {
-    "mydb": {
+    "default": {
         "name": "TestCamping",
         "host": "cluster0.l5yaw7u.mongodb.net",
         "port": 27017,

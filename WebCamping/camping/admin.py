@@ -1,10 +1,8 @@
 from django.contrib import admin
 from django_mongoengine import mongo_admin as admin
-from camping.models import Camping, Adresses_campings, Client, Voyager
+from camping.models import Camping, Client, Flat, 
 
 # Register your models here.
-
+admin.site.register(Flat)
 admin.site.register(Camping)
 admin.site.register(Client)
-admin.site.register(Adresses_campings)
-admin.site.register(Voyager)
