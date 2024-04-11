@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework_mongoengine.serializers import DocumentSerializer
 from rest_framework import viewsets, permissions
 from ..models import Camping
-from Camping.WebCamping.camping.serializer.camping_serializer import CampingSerializer
+from camping.serializer.camping_serializer import CampingSerializer
 
 # Create your views here.
 
