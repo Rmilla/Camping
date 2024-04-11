@@ -56,7 +56,7 @@ if __name__ == "__main__":
 """
 #MONGODB_DATABASES = {"default": {"name": "django_mongoengine"}}
 MONGODB_DATABASES = {
-    "default": {
+    "myDB": {
         "name": "TestCamping",
         "host": "cluster0.l5yaw7u.mongodb.net",
         "port": 27017,
@@ -201,3 +201,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
  
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+connect(db=MONGODB_DATABASES['myDB']['name'],
+                    host=MONGODB_DATABASES['myDB']['host'],
+                    port=MONGODB_DATABASES['myDB']['port'],
+                    username=MONGODB_DATABASES['myDB']['username'],
+                    password=MONGODB_DATABASES['myDB']['password'],
+                    authentication_source=MONGODB_DATABASES['myDB']['authentication_source'])

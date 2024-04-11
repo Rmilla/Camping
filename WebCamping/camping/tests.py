@@ -1,3 +1,29 @@
 from django.test import TestCase
+from rest_framework.test import APIClient
+from .serializer.camping import CampingSerializer
+from .models import Camping
 
 # Create your tests here.
+
+class CampingSerializerTestCase(TestCase):
+    def setUp(self):
+        self.camping = Camping.objects.create(name="Test Camping", location="Test Location")
+    
+    def test_serialization(self):
+        serializer = CampingSerializer(self.camping)
+        expected_data = {
+            'name': 'Test Camping',
+            'location': 'Test Location',
+            # Add other fields as necessary
+            }
+        self.assertEqual(serializer.data, expected_data)
+    def test_deserialization(self):
+        data = {
+            'name': 'Test Camping',
+            'location': 'Test Location',
+            # Add other fields as necessary
+        }
+        serializer = CampingSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
+        camping = serializer.save()
+        self.assertEqual(camping.name, 'Test Camping')
