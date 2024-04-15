@@ -17,10 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_mongoengine.routers import DefaultRouter
-from camping.views.camping_view import CampingViewSet 
+from camping.views.camping_view import CampingViewSet
+from camping.views.flat_views import SnippetViewSet
 router = DefaultRouter()
 router.register(r'campings', CampingViewSet)
-
+router.register(r'flat',SnippetViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls))
