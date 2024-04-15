@@ -204,5 +204,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 disconnect(alias='default')
-connect(db=env.str("MONGODB_DATABASE"), host=env.str("MONGODB_HOST"), port=env.int("MONGODB_PORT"), username=env.str("MONGODB_USERNAME"), 
-                    alias="default", password=env.str("MONGODB_PASSWORD"))
+connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/",
+        username='camping', password="SqP6B8wLx62DsUf6", alias='default')
