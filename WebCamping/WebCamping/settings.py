@@ -201,3 +201,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
  
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+disconnect(alias='default')
+connect(db=env.str("MONGODB_DATABASE"), host=env.str("MONGODB_HOST"), port=env.int("MONGODB_PORT"), username=env.str("MONGODB_USERNAME"), 
+                    alias="default", password=env.str("MONGODB_PASSWORD"))

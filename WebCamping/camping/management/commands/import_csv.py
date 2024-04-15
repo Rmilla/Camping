@@ -9,7 +9,7 @@ from camping.models import Flat, Camping, Client, Trip
 
 class Command(BaseCommand):
     mongoengine.connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/",
-                    username='camping', password="SqP6B8wLx62DsUf6", alias='default')
+                    username='camping', password="SqP6B8wLx62DsUf6", alias='import')
     # remplir avec votre clé API Google Maps
     API_KEY = "AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk"
     # gmaps = googlemaps.Client(key='AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk')
@@ -149,7 +149,7 @@ class Command(BaseCommand):
                     year = year,
                 )
                 trip_object.save()
-                
+            mongoengine.disconnect(alias='import')    
         # directions_result = gmaps.directions("Sydney Town Hall",
         #                                     "Parramatta, NSW",
         #                                     mode="driving",)

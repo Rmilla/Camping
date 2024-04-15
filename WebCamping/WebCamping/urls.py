@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_mongoengine.routers import DefaultRouter
 from camping.views.camping_view import CampingViewSet 
-
 router = DefaultRouter()
 router.register(r'campings', CampingViewSet)
 
