@@ -2,8 +2,9 @@ import googlemaps
 import requests
 
 #TODO ne plus coder en dur la clée API et les facteurs d'émissions
-#TODO refactoriser le code pour ne plus avoir 
+#TODO refactoriser le code pour ne plus avoir qu'un seul fichier d'appel API distance
 def distance_emissions(start,end,mode):
+    api_key= "AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk"
     base_url = "https://maps.googleapis.com/maps/api/distancematrix/json"
     params = {"origins": start, "destinations": end, "mode": mode, "key": api_key}
     response = requests.get(base_url, params=params)
@@ -19,16 +20,16 @@ def distance_emissions(start,end,mode):
                 distance = data["rows"][0]["elements"][0]["distance"]["text"].split(" ")[0]
                 if mode=="Electric engine car":
                     emissions = distance*0.103   
-                    return distance,emissions
+                    return [distance,emissions]
                 elif mode=="Bus":
                      emissions = distance*0.113
-                     return distance, emissions
+                     return [distance, emissions]
                 elif mode=="Combustion engine car":
                      emissions == distance*0.218
-                     return distance, emissions
+                     return [distance, emissions]
                 elif mode=="Train":
                      emissions = distance*0.003
-                     return distance, emissions
+                     return [distance, emissions]
                 else:
                      return "PROBLEM"
         else:
