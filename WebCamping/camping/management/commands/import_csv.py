@@ -9,7 +9,7 @@ from camping.models import Flat, Camping, Client, Trip
 
 class Command(BaseCommand):
     mongoengine.connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/",
-                    username='camping', password="SqP6B8wLx62DsUf6")
+                    username='camping', password="SqP6B8wLx62DsUf6", alias='default')
     # remplir avec votre clé API Google Maps
     API_KEY = "AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk"
     # gmaps = googlemaps.Client(key='AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk')
@@ -115,7 +115,7 @@ class Command(BaseCommand):
                         distance = float(distance)
                     transport_em = 0.113
                     emission_total = transport_em * distance
-                print(f"Nom du camping : {name_camping}, Ville du camping : {camping_city}, Ville du client : {city_client}, Année : {year} , Mode de Transport : {part[i]["Transport"]}")
+                print(f"Nom du camping : {name_camping}, Ville du camping : {camping_city}, Ville du client : {city_client}, Année : {year} , Mode de Transport : {part[i]['Transport']}")
                 print(f"Distance : {distance}, Type de la distance : {type(distance)}")
                 row_object = Flat(
                     name_camping=name_camping,
