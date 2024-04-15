@@ -18,10 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_mongoengine.routers import DefaultRouter
 from camping.views.camping_view import CampingViewSet
-from camping.views.flat_views import SnippetViewSet
+from camping.views.flat_views import FlatViewSet
 router = DefaultRouter()
 router.register(r'campings', CampingViewSet)
-router.register(r'flat',SnippetViewSet)
+router.register(r'flat',FlatViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls))

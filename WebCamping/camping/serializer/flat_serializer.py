@@ -1,6 +1,6 @@
 from rest_framework_mongoengine.serializers import DocumentSerializer
 from ..models import Flat
-from ..views.APImaps import distance_emissions # Assurez-vous que le chemin d'importation est correct
+from ..views.APImaps import distance_emissions 
 
 class FlatSerializer(DocumentSerializer):
     class Meta:
