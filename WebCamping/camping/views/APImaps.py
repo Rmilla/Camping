@@ -24,7 +24,7 @@ def distance_emissions(start,end,mode):
                      emissions = distance*0.113
                      return distance, emissions
                 elif mode=="Combustion engine car":
-                     emissions == distance*0.218
+                     emissions = distance*0.218
                      return distance, emissions
                 elif mode=="Train":
                      emissions = distance*0.003
