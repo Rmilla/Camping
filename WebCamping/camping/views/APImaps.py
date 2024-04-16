@@ -18,6 +18,7 @@ def distance_emissions(start,end,mode):
                 return None, None
             else:
                 distance = data["rows"][0]["elements"][0]["distance"]["text"].split(" ")[0]
+                distance=float(distance)
                 if mode=="Electric engine car":
                     emissions = distance*0.103   
                     return distance,emissions
