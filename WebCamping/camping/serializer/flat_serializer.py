@@ -1,5 +1,6 @@
 from rest_framework_mongoengine.serializers import DocumentSerializer
 from ..models import Flat
+from decimal import Decimal
 from ..views.APImaps import distance_emissions 
 
 class FlatSerializer(DocumentSerializer):
@@ -18,7 +19,7 @@ class FlatSerializer(DocumentSerializer):
 
         # Ajouter les valeurs calculées aux données validées
         validated_data['distance'] = distance
-        validated_data['emission_total'] = emissions
+        validated_data['emission_total'] = Decimal(emissions)
 
         # Créer et retourner l'instance de Flat
         return super().create(validated_data)
