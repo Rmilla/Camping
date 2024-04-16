@@ -20,16 +20,16 @@ def distance_emissions(start,end,mode):
                 distance = data["rows"][0]["elements"][0]["distance"]["text"].split(" ")[0]
                 if mode=="Electric engine car":
                     emissions = distance*0.103   
-                    return [distance,emissions]
+                    return distance,emissions
                 elif mode=="Bus":
                      emissions = distance*0.113
-                     return [distance, emissions]
+                     return distance, emissions
                 elif mode=="Combustion engine car":
                      emissions = distance*0.218
-                     return [distance, emissions]
+                     return distance, emissions
                 elif mode=="Train":
                      emissions = distance*0.003
-                     return [distance, emissions]
+                     return distance, emissions
                 else:
                      return "PROBLEM"
         else:
