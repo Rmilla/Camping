@@ -15,7 +15,7 @@ def distance_emissions(start,end,mode):
         if data["status"] == "OK":
             #print(data["rows"][0]["elements"][0])
             if data["rows"][0]["elements"][0] == {'status' : 'NOT_FOUND'} or data["rows"][0]["elements"][0] == {'status' : 'ZERO_RESULTS'}:
-                return "PROBLEM" 
+                return None, None
             else:
                 distance = data["rows"][0]["elements"][0]["distance"]["text"].split(" ")[0]
                 if mode=="Electric engine car":
@@ -31,12 +31,12 @@ def distance_emissions(start,end,mode):
                      emissions = distance*0.003
                      return distance, emissions
                 else:
-                     return "PROBLEM"
+                     return None, None
         else:
             print("Request failed.")
             print(response)
-            return 'PROBLEM'
+            return None, None
     else:
             print("Failed to make the request.")
             print(response)
-            return 'PROBLEM'
+            return None, None
