@@ -18,6 +18,10 @@ class FlatSerializer(DocumentSerializer):
         distance, emissions = distance_emissions(start, end, mode)
 
         # Ajouter les valeurs calculées aux données validées
+        if distance is None or emissions is None:
+            # Gérer le cas où distance_emissions retourne None pour l'une des valeurs
+            raise ValueError("Unable to calculate distance and emissions.")
+        
         validated_data['distance'] = distance
         validated_data['emission_total'] = Decimal(emissions)
 
