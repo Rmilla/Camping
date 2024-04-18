@@ -4,27 +4,9 @@ import csv
 import itertools
 import os
 import json
-import mongoengine
 from camping.models import Flat, Camping, Client, Trip
 
-
-'''
-PARTIE1
-CODE1
-
-PARTIE2
-CODE2
-'''
-
 class Command(BaseCommand):
-    def __init__(self):
-        self.connect_mongodb()
-
-    def connect_mongodb(self):
-        if not mongoengine.connection._connections:
-            mongoengine.connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/", username='camping', password="SqP6B8wLx62DsUf6", alias='default')
-        else:
-            mongoengine.connection.disconnect()
 
     def add_arguments(self, parser):
         parser.add_argument("API_KEY", type=str, help="API Key for Google Maps")
