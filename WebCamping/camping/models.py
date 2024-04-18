@@ -10,17 +10,17 @@ import os
 #     return data
 # emissions = donnees_vehicule()
 # vehicules = [tuple(emissions.keys())]
-class Flat(Document):
-    name_camping = fields.StringField(max_length=255)
-    adress_camping = fields.StringField(max_length=255)
-    city = fields.StringField(max_length=255)
-    country_camping = fields.StringField(max_length=255)
-    client_country = fields.StringField(max_length=255)
-    client_city = fields.StringField(max_length=255)
-    year = fields.IntField()
-    transport_mode = fields.StringField(max_length=255)
-    distance = fields.FloatField()
-    emission_total = fields.DecimalField(max_digits=5, decimal_places=2)
+# class Flat(Document):
+#     name_camping = fields.StringField(max_length=255)
+#     adress_camping = fields.StringField(max_length=255)
+#     city = fields.StringField(max_length=255)
+#     country_camping = fields.StringField(max_length=255)
+#     client_country = fields.StringField(max_length=255)
+#     client_city = fields.StringField(max_length=255)
+#     year = fields.IntField()
+#     transport_mode = fields.StringField(max_length=255)
+#     distance = fields.FloatField()
+#     emission_total = fields.DecimalField(max_digits=5, decimal_places=2)
 
 json_file_path = 'C:/Projets/Stage/Camping/WebCamping/camping/vehicle_emissions.json'
 def donnees_vehicule():
@@ -32,28 +32,28 @@ vehicules = [set(emissions.keys())]
 print(vehicules)
 
 class Camping(Document):
-    #id_camping = fields.StringField(rmax_length=200)
+    id_camping = fields.StringField(rmax_length=200)
     camping_name = fields.StringField(max_length=200)
-    #postal_code = fields.StringField()
+    postal_code = fields.StringField()
     camping_city = fields.StringField(max_length=200)
     camping_country = fields.StringField(max_length=200)
-    #emission_total = fields.StringField()
+    emission_total = fields.StringField()
 
-#class Adress_camping(Document):
-    #id_Adresses = fields.StringField(max_length=200)
-    #Adresse_complète = fields.StringField(max_length=200)
-    #Pays = fields.StringField(max_length=200)
+class Adress_camping(Document):
+    id_Adresses = fields.StringField(max_length=200)
+    Adresse_complète = fields.StringField(max_length=200)
+    Pays = fields.StringField(max_length=200)
 
 class Client(Document):
-    #id_client = fields.StringField(max_length=200)
-    #client_adress = fields.StringField(max_length=200)
-    #code_postal = fields.StringField(max_length=200)
+    id_client = fields.StringField(max_length=200)
+    client_adress = fields.StringField(max_length=200)
+    code_postal = fields.StringField(max_length=200)
     client_city = fields.StringField(max_length=200)
     client_country = fields.StringField(max_length=200)
 
 class Trip(Document):
     emissions = fields.FloatField()
-    #vehicule = fields.StringField(choices=vehicules, default='voiture')
+    vehicule = fields.StringField(choices=vehicules, default='voiture')
     vehicle = fields.StringField(max_length=200)
     distance = fields.FloatField()
     year = fields.IntField()

@@ -15,3 +15,5 @@ django-admin-honeypot-updated-2021
 django-cors-middleware
 django-cors-headers
 django_mongoengine
+djangorestframework-simplejwt-mongoengine
+djangorestframework-simplejwt

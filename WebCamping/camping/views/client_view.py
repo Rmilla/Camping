@@ -14,7 +14,6 @@ class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
-    #filterset_class = ClubFilters
 
     def get_queryset(self):
         return Client.objects.all()

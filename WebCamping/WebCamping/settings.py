@@ -55,36 +55,18 @@ if __name__ == "__main__":
     test_connection()
 """
 #MONGODB_DATABASES = {"default": {"name": "django_mongoengine"}}
-MONGODB_DATABASES = {
-    "myDB": {
-        "name": "TestCamping",
-        "host": "cluster0.l5yaw7u.mongodb.net",
-        "port": 27017,
-        "username": "camping",
-        "password": "SqP6B8wLx62DsUf6",
-        "authentication_source": "admin",
-        #"alias": "mydb",
-    },
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'TestCamping',
+        'USER': 'your_database_user',
+        'PASSWORD': 'your_database_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
-"""
-USERNAME = env("USERNAME")
-MONGODB_DATABASES = {
-    "default": {
-        "name": "TestCamping",
-        "host": env("MONGODB_HOST"),
-        "port": env("MONGODB_PORT"),
-        "password": env("MONGODB_PASSWORD"),
-        "username": env("MONGODB_USERNAME"),
-        "tz_aware": True, # if you using timezones in django (USE_TZ = True)
-    },
-}
-
-#PASSWORD = env("PASSWORD")
-#HOST = env("HOST")
-#mongoengine.connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/",
-#                    username=USERNAME, password="SqP6B8wLx62DsUf6")
-"""
 
 #DATABASES = {"default": {"ENGINE": "django.db.backends.dummy"}}
 
@@ -99,10 +81,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework_mongoengine',
     'rest_framework',
-    'django_mongoengine',
-    #'mongoengine.contrib.admin',
-    'django_mongoengine.mongo_auth',
-    'django_mongoengine.mongo_admin',
     #"rest_framework.authtoken",
     "django_filters",
     "camping",
@@ -110,9 +88,11 @@ INSTALLED_APPS = [
     #"axes",   
 ]
  
-AUTH_USER_MODEL = 'mongo_auth.MongoUser'
  
-AUTHENTICATION_BACKENDS = ('mongoengine.django.auth.MongoEngineBackend',)
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend', # Default Django authentication backend
+    'rest_framework.authentication.TokenAuthentication', # Token-based authentication for API
+]
  
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -176,9 +156,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
  
-AUTHENTICATION_BACKENDS = (
-    'mongoengine.django.auth.MongoEngineBackend',
-)
  
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -203,6 +180,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-disconnect(alias='default')
-connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/",
-        username='camping', password="SqP6B8wLx62DsUf6", alias='default')
+# disconnect(alias='default')
+# connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/",
+#         username='camping', password="SqP6B8wLx62DsUf6", alias='default')

@@ -14,7 +14,6 @@ class CampingViewSet(viewsets.ModelViewSet):
     serializer_class = CampingSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
-    #filterset_class = ClubFilters
 
     def get_queryset(self):
         return Camping.objects.all()
