@@ -1,5 +1,4 @@
 from django.db import models
-from mongoengine import Document, fields
 import json
 import os
 
