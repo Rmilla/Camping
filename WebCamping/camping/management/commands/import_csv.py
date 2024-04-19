@@ -4,27 +4,8 @@ import csv
 import itertools
 import os
 import json
-import mongoengine
-from camping.models import Flat, Camping, Client, Trip
-
-
-'''
-PARTIE1
-CODE1
-
-PARTIE2
-CODE2
-'''
 
 class Command(BaseCommand):
-    def __init__(self):
-        self.connect_mongodb()
-
-    def connect_mongodb(self):
-        if not mongoengine.connection._connections:
-            mongoengine.connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/", username='camping', password="SqP6B8wLx62DsUf6", alias='default')
-        else:
-            mongoengine.connection.disconnect()
 
     def add_arguments(self, parser):
         parser.add_argument("API_KEY", type=str, help="API Key for Google Maps")
@@ -74,8 +55,6 @@ class Command(BaseCommand):
                 transport = record["Transport"]
 
                 API_transport = "transit" if transport == "Train" else "driving"
-                if transport not in ["Train", "Electric engine car", "Combustion engine car"]:
-                    API_transport = "driving"
 
                 distance = self.get_distance(API_KEY, city_client, camping_city, API_transport)
                 if distance == 'PROBLEM':
@@ -134,30 +113,3 @@ class Command(BaseCommand):
             year=year,
         )
         trip_object.save()
-
-        # directions_result = gmaps.directions("Sydney Town Hall",
-        #                                     "Parramatta, NSW",
-        #                                     mode="driving",)
-        # stock la distance dans une variable.
-        # distance = directions_result[0]['legs'][0]['distance']['text']
-
-    # def geolocalisation():
-    #    city = 'london'
-    #    api_url = 'https://api.api-ninjas.com/v1/geocoding?city='+city+''
-    #    response = requests.get(api_url, headers={'X-Api-Key': '9ZhwyUW2uIaDzkXe5sdiYHPxJLGnahYLWNwA6UdX'})
-    #    if response.status_code == requests.codes.ok:
-    #        print(response.text)
-    #    else:
-    #        print("Error:", response.status_code, response.text)
-    #    return response.text
-
-    # def calculDistance():
-    #    url = "https://api.myptv.com/routing/v1/routes?waypoints="+response.text["latitude"]+"&waypoints="+response.text["longitude"]+"&options[trafficMode]=AVERAGE"
-    #    headers = {
-    #        'apiKey': "RVVfNGUyN2U1NmU1M2U2NDM1NzhkODRjNGVmMjhmMmIxYzI6ZDNjMTc1ZmEtMTI0OS00OTk4LWJmN2QtMjk5M2I2YmU2ZGQy"
-    #    }
-    #    response = requests.request("GET", url, headers=headers)
-    #    print(response.text.encode('utf8'))
-
-    # geolocalisation()
-    # calculDistance()

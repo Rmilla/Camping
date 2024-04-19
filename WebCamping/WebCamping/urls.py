@@ -16,10 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_mongoengine.routers import DefaultRouter
 from camping.views.camping_view import CampingViewSet
 from camping.views.flat_views import FlatViewSet
-router = DefaultRouter()
+from rest_framework import routers
+router = routers.DefaultRouter()
 router.register(r'campings', CampingViewSet)
 router.register(r'flat',FlatViewSet)
 urlpatterns = [

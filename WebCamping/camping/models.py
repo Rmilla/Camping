@@ -1,5 +1,4 @@
 from django.db import models
-from mongoengine import Document, EmbeddedDocument, fields
 import json
 import os
 # # Créations des modèles.
@@ -10,19 +9,19 @@ import os
 #     return data
 # emissions = donnees_vehicule()
 # vehicules = [tuple(emissions.keys())]
-class Flat(Document):
-    name_camping = fields.StringField(max_length=255)
-    adress_camping = fields.StringField(max_length=255)
-    city = fields.StringField(max_length=255)
-    country_camping = fields.StringField(max_length=255)
-    client_country = fields.StringField(max_length=255)
-    client_city = fields.StringField(max_length=255)
-    year = fields.IntField()
-    transport_mode = fields.StringField(max_length=255)
-    distance = fields.FloatField()
-    emission_total = fields.DecimalField(max_digits=5, decimal_places=2)
+class Flat(models.Model):
+    name_camping = models.CharField(max_length=255)
+    adress_camping = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    country_camping = models.CharField(max_length=255)
+    client_country = models.CharField(max_length=255)
+    client_city = models.CharField(max_length=255)
+    year = models.IntegerField()
+    transport_mode = models.CharField(max_length=255)
+    distance = models.FloatField()
+    emission_total = models.DecimalField(max_digits=5, decimal_places=2)
 
-json_file_path = 'C:/Projets/Stage/Camping/WebCamping/camping/vehicle_emissions.json'
+json_file_path = 'C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack2\\Camping\\WebCamping\\camping\\vehicle_emissions.json'
 def donnees_vehicule():
     with open(json_file_path, 'r') as file:
         data = json.load(file)
@@ -31,12 +30,12 @@ emissions = donnees_vehicule()
 vehicules = [set(emissions.keys())]
 print(vehicules)
 
-class Camping(Document):
+class Camping(models.Model):
     #id_camping = fields.StringField(rmax_length=200)
-    camping_name = fields.StringField(max_length=200)
+    camping_name = models.CharField(max_length=200)
     #postal_code = fields.StringField()
-    camping_city = fields.StringField(max_length=200)
-    camping_country = fields.StringField(max_length=200)
+    camping_city = models.CharField(max_length=200)
+    camping_country = models.CharField(max_length=200)
     #emission_total = fields.StringField()
 
 #class Adress_camping(Document):
@@ -44,19 +43,19 @@ class Camping(Document):
     #Adresse_complète = fields.StringField(max_length=200)
     #Pays = fields.StringField(max_length=200)
 
-class Client(Document):
+class Client(models.Model):
     #id_client = fields.StringField(max_length=200)
     #client_adress = fields.StringField(max_length=200)
     #code_postal = fields.StringField(max_length=200)
-    client_city = fields.StringField(max_length=200)
-    client_country = fields.StringField(max_length=200)
+    client_city = models.CharField(max_length=200)
+    client_country = models.CharField(max_length=200)
 
-class Trip(Document):
-    emissions = fields.FloatField()
+class Trip(models.Model):
+    emissions = models.FloatField()
     #vehicule = fields.StringField(choices=vehicules, default='voiture')
-    vehicle = fields.StringField(max_length=200)
-    distance = fields.FloatField()
-    year = fields.IntField()
+    vehicle = models.CharField(max_length=200)
+    distance = models.FloatField()
+    year = models.IntegerField()
 
 
 def calcul_emission(Voyager):

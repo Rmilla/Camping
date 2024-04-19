@@ -1,9 +1,9 @@
-from rest_framework_mongoengine.serializers import DocumentSerializer
+from rest_framework import serializers
 from ..models import Flat
 from decimal import Decimal
 from ..views.APImaps import distance_emissions 
 
-class FlatSerializer(DocumentSerializer):
+class FlatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Flat
         fields = '__all__'

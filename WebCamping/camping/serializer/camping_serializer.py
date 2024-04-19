@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework_mongoengine.serializers import DocumentSerializer
+from rest_framework import serializers
 from ..models import Camping
 
-class CampingSerializer(DocumentSerializer):
+class CampingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Camping
         fields = '__all__'

@@ -14,8 +14,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 import environ
-from mongoengine import *
-from django_mongoengine import mongo_admin
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,57 +32,20 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
  
 ALLOWED_HOSTS = ["127.0.0.1"]
- 
-# MongoDB settings
 
-disconnect()
-"""""
-def test_connection():
-    # Replace <your_connection_string> with your actual MongoDB Atlas connection string
-    connection_string = "mongodb+srv://camping:SqP6B8wLx62DsUf6@cluster0.l5yaw7u.mongodb.net/TestCamping"
 
-    try:
-        # Connect to MongoDB Atlas using mongoengine
-        connect(host=connection_string)
-
-        print("Connection to MongoDB Atlas using mongoengine successful!")
-    except Exception as e:
-        print(f"Failed to connect to MongoDB Atlas using mongoengine: {e}")
-        
-if __name__ == "__main__":
-    test_connection()
-"""
-#MONGODB_DATABASES = {"default": {"name": "django_mongoengine"}}
-MONGODB_DATABASES = {
-    "myDB": {
-        "name": "TestCamping",
-        "host": "cluster0.l5yaw7u.mongodb.net",
-        "port": 27017,
-        "username": "camping",
-        "password": "SqP6B8wLx62DsUf6",
-        "authentication_source": "admin",
-        #"alias": "mydb",
-    },
-}
-
-"""
-USERNAME = env("USERNAME")
-MONGODB_DATABASES = {
+DATABASES = {
     "default": {
-        "name": "TestCamping",
-        "host": env("MONGODB_HOST"),
-        "port": env("MONGODB_PORT"),
-        "password": env("MONGODB_PASSWORD"),
-        "username": env("MONGODB_USERNAME"),
-        "tz_aware": True, # if you using timezones in django (USE_TZ = True)
+        "ENGINE": env.str("DB_ENGINE"),
+        "NAME": env.str("DB_NAME"),
+        "USER": env.str("DB_USER"),
+        "PASSWORD": env.str("DB_PASSWORD"),
+        "HOST": env.str("DB_HOST"),
+        "PORT": env.int("DB_PORT"),
+        
     },
 }
 
-#PASSWORD = env("PASSWORD")
-#HOST = env("HOST")
-#mongoengine.connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/",
-#                    username=USERNAME, password="SqP6B8wLx62DsUf6")
-"""
 
 #DATABASES = {"default": {"ENGINE": "django.db.backends.dummy"}}
 
@@ -97,22 +58,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework_mongoengine',
     'rest_framework',
-    'django_mongoengine',
-    #'mongoengine.contrib.admin',
-    'django_mongoengine.mongo_auth',
-    'django_mongoengine.mongo_admin',
-    #"rest_framework.authtoken",
+    "rest_framework.authtoken",
     "django_filters",
     "camping",
-    #"admin_honeypot",
-    #"axes",   
+    "admin_honeypot",
+    "axes",   
 ]
  
-AUTH_USER_MODEL = 'mongo_auth.MongoUser'
+#AUTH_USER_MODEL = 'mongo_auth.MongoUser'
  
-AUTHENTICATION_BACKENDS = ('mongoengine.django.auth.MongoEngineBackend',)
+#AUTHENTICATION_BACKENDS = ('mongoengine.django.auth.MongoEngineBackend',)
  
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -149,15 +105,6 @@ WSGI_APPLICATION = 'WebCamping.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-
-#SESSION_ENGINE='django_mongoengine.sessions'
-#Not sur if this is correct or if it is necessary to use "django_mongoengine.sessions" instead
-#as in the github of mongoengine
-#SESSION_SERIALIZER = 'django_mongoengine.sessions.BSONSerializer'
-#INSTALLED_APPS += ["django_mongoengine"]
-
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
  
@@ -175,10 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
- 
-AUTHENTICATION_BACKENDS = (
-    'mongoengine.django.auth.MongoEngineBackend',
-)
  
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -201,8 +144,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
  
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-disconnect(alias='default')
-connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/",
-        username='camping', password="SqP6B8wLx62DsUf6", alias='default')
