@@ -31,18 +31,22 @@ vehicules = [(key, key) for key in emissions.keys()]
 print(vehicules)
 
 class Camping(models.Model):
-    id_camping = models.CharField(max_length=200)
+    id = models.AutoField(primary_key=True)
     camping_name = models.CharField(max_length=200)
-    postal_code = models.CharField()
+    postal_code = models.CharField(max_length=200)
     camping_city = models.CharField(max_length=200)
     camping_country = models.CharField(max_length=200)
-    emission_total = models.CharField()
+    emission_total = models.CharField(max_length=200)
+    id_adresses = models.ForeignKey('adresse', on_delete=models.CASCADE, related_name='camping')
 
 class Trip(models.Model):
     emissions = models.FloatField()
-    vehicule = models.CharField(choices=vehicules, default='voiture')
+    vehicule = models.CharField(choices=vehicules, default='voiture', max_length=200)
     distance = models.FloatField()
     year = models.IntegerField()
+    client = models.ForeignKey('client', on_delete=models.CASCADE, related_name='trip')
+    camping = models.ForeignKey('camping', on_delete=models.CASCADE, related_name='trip')
+
 
 def calcul_emission(Voyager):
     # définis les facteurs d'émissions

@@ -1,7 +1,7 @@
-from rest_framework_mongoengine.serializers import DocumentSerializer
+from rest_framework import serializers
 from ..models.client import Client
 
-class ClientSerializer(DocumentSerializer):
+class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = '__all__'

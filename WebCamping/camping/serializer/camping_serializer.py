@@ -1,7 +1,7 @@
-from rest_framework_mongoengine.serializers import DocumentSerializer
+from rest_framework import serializers
 from ..models.camping import Camping
 
-class CampingSerializer(DocumentSerializer):
+class CampingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Camping
         fields = '__all__'
