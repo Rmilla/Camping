@@ -106,7 +106,7 @@ WSGI_APPLICATION = 'WebCamping.wsgi.application'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
-AUTH_USER_MODEL = 'camping.Manager'
+# AUTH_USER_MODEL = 'camping.Login'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

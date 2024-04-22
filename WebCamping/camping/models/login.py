@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 import json
 import os
 
-class ManagerManager(BaseUserManager):
+class LoginManager(BaseUserManager):
     """ Personnalisation de la gestion des utilisateurs afin d'intégrer la gestion de l'authentification par token"""
     def create_user(self, email, origin_country, password, **extra_fields):
         if not email:
@@ -14,12 +14,12 @@ class ManagerManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
-class Manager(AbstractBaseUser, PermissionsMixin):
+class Login(AbstractBaseUser, PermissionsMixin):
     # Appliquer la gestion particulière de l'utilisateur au model customisé, qui hérite du model de django.
     email = models.EmailField(unique=True)
     password = models.CharField(20)
     administrateur = models.BooleanField(default=False)
-    objects = ManagerManager()
+    objects = LoginManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
