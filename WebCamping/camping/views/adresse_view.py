@@ -14,4 +14,4 @@ class AdresseViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
 
     def get_queryset(self):
-        return Camping.objects.all()
+        return Adresse_camping.objects.all()
