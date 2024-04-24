@@ -38,13 +38,7 @@ class Camping(models.Model):
     camping_country = models.CharField(max_length=200)
     id_adresse = models.ForeignKey('Adresse_camping', on_delete=models.CASCADE, related_name='camping')
 
-class Trip(models.Model):
-    emissions = models.FloatField()
-    vehicle = models.CharField(choices=vehicules, default='voiture', max_length=200)
-    distance = models.FloatField()
-    year = models.IntegerField()
-    client = models.ForeignKey('client', on_delete=models.CASCADE, related_name='trip')
-    camping = models.ForeignKey('camping', on_delete=models.CASCADE, related_name='trip')
+
 
 
 def calcul_emission(Voyager):
