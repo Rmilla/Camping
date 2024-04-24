@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from ..models.camping import Camping
-from ..models.camping import Trip
+from ..models.trip import Trip
 
 class CampingSerializer(serializers.ModelSerializer):
     class Meta:

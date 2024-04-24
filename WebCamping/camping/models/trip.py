@@ -1,4 +1,14 @@
 from django.db import models
+import json
+
+json_file_path = 'C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack\\Camping\\WebCamping\\camping\\vehicle_emissions.json'
+def donnees_vehicule():
+    with open(json_file_path, 'r') as file:
+        data = json.load(file)
+    return data
+emissions = donnees_vehicule()
+vehicules = [(key, key) for key in emissions.keys()]
+print(vehicules)
 
 class Trip(models.Model):
     emissions = models.FloatField()
