@@ -23,5 +23,6 @@ class Login(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['username','password']
 
+
     def __str__(self):
         return self.username
