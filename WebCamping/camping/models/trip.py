@@ -11,9 +11,9 @@ vehicules = [(key, key) for key in emissions.keys()]
 print(vehicules)
 
 class Trip(models.Model):
-    emissions = models.FloatField()
+    emissions = models.FloatField(default=None, null=True)
     vehicle = models.CharField(choices=vehicules, default='voiture', max_length=200)
-    distance = models.FloatField()
+    distance = models.FloatField(default=None, null=True)
     year = models.IntegerField()
     client = models.ForeignKey('client', on_delete=models.CASCADE, related_name='trip')
     camping = models.ForeignKey('camping', on_delete=models.CASCADE, related_name='trip')
