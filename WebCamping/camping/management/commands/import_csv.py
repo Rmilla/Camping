@@ -5,7 +5,8 @@ import itertools
 import os
 import json
 import mongoengine
-from Camping.WebCamping.camping.models.camping import Camping, Client, Trip
+from Camping.WebCamping.camping.models.camping import Camping, Trip
+from Camping.WebCamping.camping.models.client import Client
 
 
 '''
