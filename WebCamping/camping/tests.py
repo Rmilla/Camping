@@ -1,7 +1,7 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 from .serializer.camping_serializer import CampingSerializer
-from .models import Camping
+from .models.camping import Camping
 
 # Create your tests here.
 

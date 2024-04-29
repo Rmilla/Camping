@@ -1,0 +1,4 @@
+from .adresse_serializer import AdresseSerializer
+from .camping_serializer import CampingSerializer
+from .client_serializer import ClientSerializer
+from .trip_serializer import TripSerializer

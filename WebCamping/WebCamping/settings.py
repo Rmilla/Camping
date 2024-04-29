@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 import environ
+from django.contrib.auth import get_user_model
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,21 +34,17 @@ DEBUG = True
  
 ALLOWED_HOSTS = ["127.0.0.1"]
 
-
 DATABASES = {
-    "default": {
-        "ENGINE": env.str("DB_ENGINE"),
-        "NAME": env.str("DB_NAME"),
-        "USER": env.str("DB_USER"),
-        "PASSWORD": env.str("DB_PASSWORD"),
-        "HOST": env.str("DB_HOST"),
-        "PORT": env.int("DB_PORT"),
-        
-    },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'camping',
+        'USER': 'postgres',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
-
-#DATABASES = {"default": {"ENGINE": "django.db.backends.dummy"}}
 
 # Application definition
  
@@ -59,16 +56,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    "rest_framework.authtoken",
+    #"rest_framework.authtoken",
     "django_filters",
     "camping",
     "admin_honeypot",
     "axes",   
 ]
  
-#AUTH_USER_MODEL = 'mongo_auth.MongoUser'
  
-#AUTHENTICATION_BACKENDS = ('mongoengine.django.auth.MongoEngineBackend',)
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend', # Default Django authentication backend
+    'rest_framework.authentication.TokenAuthentication', # Token-based authentication for API
+]
  
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -107,7 +106,8 @@ WSGI_APPLICATION = 'WebCamping.wsgi.application'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
- 
+# AUTH_USER_MODEL = 'camping.Login'
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -122,6 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+ 
  
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -144,3 +145,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
  
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# disconnect(alias='default')
+# connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/",
+#         username='camping', password="SqP6B8wLx62DsUf6", alias='default')

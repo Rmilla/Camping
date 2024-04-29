@@ -1,5 +1,13 @@
 from django.contrib import admin
-from camping.models import Camping, Flat
+from .models.camping import Camping
+from .models.trip import Trip
+from .models.adresse import Adresse_camping
+from .models.client import Client
+
+
 
 # Register your models here.
-admin.site.register(Flat)
+admin.site.register(Camping)
+admin.site.register(Adresse_camping)
+admin.site.register(Client)
+admin.site.register(Trip)

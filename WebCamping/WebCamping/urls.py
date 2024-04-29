@@ -17,11 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from camping.views.camping_view import CampingViewSet
-from camping.views.flat_views import FlatViewSet
-from rest_framework import routers
-router = routers.DefaultRouter()
-router.register(r'campings', CampingViewSet)
-router.register(r'flat',FlatViewSet)
+from camping.views.client_view import ClientViewSet
+from camping.views.adresse_view import AdresseViewSet
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'client', ClientViewSet)
+router.register(r'camping', CampingViewSet)
+router.register(r'adresse', AdresseViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls))
