@@ -75,7 +75,8 @@ class Command(BaseCommand):
             part = self.read_csv_lines("Fakedata.csv", line, line + step)
             for record in part:
                 name_camping, camping_postal_adress, camping_city, country_camping = record["camping"].split(sep="/")
-                camping_postal_code = camping_postal_adress[0][-6:-1]
+                camping_postal_code = camping_postal_adress[-6:-1]
+                print("Camping_postal_code", camping_postal_code)
                 country_client = record["Country"]
                 city_client = record["City"].split(sep=" ")[0]
                 year = record["Year"]
