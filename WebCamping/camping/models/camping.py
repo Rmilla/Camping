@@ -21,7 +21,7 @@ import os
 #     distance = fields.FloatField()
 #     emission_total = fields.DecimalField(max_digits=5, decimal_places=2)
 
-json_file_path = 'C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack\\Camping\\WebCamping\\camping\\vehicle_emissions.json'
+json_file_path = 'C:/Projets/Stage/Camping/WebCamping/camping/vehicle_emissions.json'
 def donnees_vehicule():
     with open(json_file_path, 'r') as file:
         data = json.load(file)
@@ -33,7 +33,7 @@ print(vehicules)
 class Camping(models.Model):
     #id = models.AutoField(primary_key=True)
     camping_name = models.CharField(max_length=200)
-    #postal_code = models.CharField(max_length=200)
+    postal_code = models.CharField(max_length=200)
     camping_city = models.CharField(max_length=200)
     camping_country = models.CharField(max_length=200)
     id_adresse = models.ForeignKey('Adresse_camping', on_delete=models.CASCADE, related_name='camping')
