@@ -33,7 +33,7 @@ print(vehicules)
 class Camping(models.Model):
     #id = models.AutoField(primary_key=True)
     camping_name = models.CharField(max_length=200)
-    #postal_code = models.CharField(max_length=200)
+    postal_code = models.CharField(max_length=200)
     camping_city = models.CharField(max_length=200)
     camping_country = models.CharField(max_length=200)
     id_adresse = models.ForeignKey('Adresse_camping', on_delete=models.CASCADE, related_name='camping')
