@@ -3,6 +3,6 @@ import json
 import os
 
 class Adresse_camping(models.Model):
-    id = models.AutoField(primary_key=True)
+    #id = models.AutoField(primary_key=True)
     Adresse_complète = models.CharField(max_length=200)
     Pays = models.CharField(max_length=200)

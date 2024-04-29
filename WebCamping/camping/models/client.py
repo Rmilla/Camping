@@ -1,10 +1,8 @@
 from django.db import models
-import json
-import os
+import uuid
 
 class Client(models.Model):
-    id = models.AutoField(primary_key=True)
-    client_adress = models.CharField(max_length=200)
-    code_postal = models.CharField(max_length=200)
+    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     client_city = models.CharField(max_length=200)
     client_country = models.CharField(max_length=200)
+    
