@@ -16,12 +16,13 @@ class LoginManager(BaseUserManager):
 class Login(AbstractBaseUser, PermissionsMixin):
     # Appliquer la gestion particulière de l'utilisateur au model customisé, qui hérite du model de django.
     username = models.CharField(max_length=255, unique=True)
-    password = models.CharField(20)
+    password = models.CharField(max_length=20)
     administrateur = models.BooleanField(default=False)
     objects = LoginManager()
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['username','password']
+
 
     def __str__(self):
         return self.username
