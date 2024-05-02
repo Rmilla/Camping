@@ -59,8 +59,8 @@ INSTALLED_APPS = [
     #"rest_framework.authtoken",
     "django_filters",
     "camping",
-    #"admin_honeypot",
-    #"axes",   
+    "admin_honeypot",
+    "axes",   
 ]
  
  

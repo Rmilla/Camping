@@ -1,7 +1,8 @@
 SECRET_KEY='django-insecure-8k=nd_&r0t!wo&-9^s$eyp8#(0e(yypcs5f+g3=-qn4klh-5o_'
  
-MONGODB_HOST="cluster0.l5yaw7u.mongodb.net"
-MONGODB_PORT="27017"
-MONGODB_PASSWORD="SqP6B8wLx62DsUf6"
-MONGODB_USERNAME="camping"
-MONGODB_DATABASE="TestCamping"
+DB_ENGINE=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=

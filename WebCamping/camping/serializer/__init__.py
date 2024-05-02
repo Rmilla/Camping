@@ -2,3 +2,7 @@ from .adresse_serializer import AdresseSerializer
 from .camping_serializer import CampingSerializer
 from .client_serializer import ClientSerializer
 from .trip_serializer import TripSerializer
+from .gen_dashboard_emission_group_serializer_years import General_emission_group_serializer_years
+from .pie_chart import Pie_chart_serializer
+from .distance_by_mean_of_transport_serializer import Distance_by_transport_Serializer
+from .emissions_by_mean_of_transport_serializer import Emission_by_transport_Serializer
