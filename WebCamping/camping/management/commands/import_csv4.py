@@ -1,3 +1,4 @@
+import dis
 from django.core.management.base import BaseCommand
 import requests
 import csv
@@ -76,13 +77,13 @@ class Command(BaseCommand):
             for record in part:
                 name_camping, camping_postal_adress, camping_city, country_camping = record["camping"].split(sep="/")
                 camping_postal_code = camping_postal_adress[-6:-1]
-                print("Camping_postal_code", camping_postal_code)
+                #print("Camping_postal_code", camping_postal_code)
                 country_client = record["Country"]
                 city_client = record["City"].split(sep=" ")[0]
                 year = record["Year"]
                 transport = record["Transport"]
 
-                print('debut insetion ligne', line)
+                #print('debut insetion ligne', line)
                 #Insertion de chaque ligne dans la table Adresse_camping
                 if name_camping not in ad_camping_dict.keys():
                     ad_camping_dict[name_camping] = {"id": id_adresse, "camping_postal_adress": camping_postal_adress, \
@@ -97,8 +98,8 @@ class Command(BaseCommand):
                                     )
                         temp_adresse = id_adresse
                         id_adresse=id_adresse+1
-                        print(f"temp_adresse {temp_adresse}")
-                        print(json.dumps(ad_camping_dict[name_camping],indent=4))
+                        #print(f"temp_adresse {temp_adresse}")
+                        #print(json.dumps(ad_camping_dict[name_camping],indent=4))
 
                 #Insertion de chaque ligne dans la table Client (on considere que chaque ville est unique pour un pays donné)
                 if city_client not in client_dict.keys():
@@ -113,10 +114,10 @@ class Command(BaseCommand):
                                        )
                         temp_id_client = client_dict[city_client]["id"]
                         id_client=id_client+1
-                        print("if, temp_id_client", temp_id_client)
+                        #print("if, temp_id_client", temp_id_client)
                 else:
                     temp_id_client=client_dict[city_client]["id"]
-                    print("else, temp_id_client", temp_id_client)
+                    #("else, temp_id_client", temp_id_client)
                 #Insertion de chaque ligne dans la table Camping
                 if name_camping not in camping_dict.keys():
                     camping_dict[name_camping] = {"id": id_camping, "name_camping": name_camping, "id_adresse": temp_adresse, \
@@ -135,19 +136,26 @@ class Command(BaseCommand):
                                        )
                         temp_id_camping=camping_dict[name_camping]["id"]
                         id_camping=id_camping+1
-                        print("if, temp_id_camping", temp_id_camping)
+                        #print("if, temp_id_camping", temp_id_camping)
                 else:
                     temp_id_camping = camping_dict[name_camping]["id"]
-                    print("else, temp_id_camping", temp_id_camping)
+                    #print("else, temp_id_camping", temp_id_camping)
                 #Insertion de chaque ligne dans la table trip
             
                 API_transport = "transit" if transport == "Train" else "driving"
-                distance = self.get_distance(API_KEY, city_client, camping_city, API_transport)
-                if distance == 'PROBLEM':
+                distance_sent = self.get_distance(API_KEY, city_client, camping_city, API_transport)
+                if distance_sent == 'PROBLEM':
+                    #TODO L'ajout sur id trip n'est pas nécessaire
+                    #id_trip=id_trip+1
                     continue
-                distance = float(distance.replace(",", ".")) * 1000
+                #print(f"Distance renvoyée par l'API de google: {distance_sent}, Ville du camping {camping_city}, Ville du client {city_client}")
+                if "," in distance_sent:
+                    distance = float(distance_sent.replace(",", ".")) * 1000
+                else:
+                    distance=float(distance_sent)
+                #print(f"Distance calculée : {distance}")
                 transport_em = vehicle_emissions.get(transport, 0)
-                print(line, temp_id_client, temp_id_camping)
+                #print(line, temp_id_client, temp_id_camping)
                 emission_total = distance*transport_em
                 
                 with connection.cursor() as cursor:
@@ -164,14 +172,12 @@ class Command(BaseCommand):
                             ]       
                                    )
                     id_trip=id_trip+1
-
+                print(f"id_trip : {id_trip}, nom du camping : {name_camping}, lieu du camping : {camping_city}, ville du client : {city_client}, Moyen de transport : {transport} distance : {distance}")
     #Path du fichier vehicle_emissions.json chez Pierre
-    #"C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack2\\Camping\\WebCamping\\camping\\vehicle_emissions.json"
+    #C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack2\\Camping\\WebCamping\\camping\\vehicle_emissions.json"
     def load_vehicle_data(self):
         #json_file_path = os.path.join(os.path.dirname(__file__), 'vehicle_emissions.json')
         json_file_path ="C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack2\\Camping\\WebCamping\\camping\\vehicle_emissions.json"
         with open(json_file_path, 'r') as file:
             data = json.load(file)
         return data
-    
-    
