@@ -33,7 +33,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
  
 ALLOWED_HOSTS = ["127.0.0.1"]
-
+""""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -44,7 +44,17 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+"""
+DATABASES ={'default':
+{
+'ENGINE': env.str('DB_ENGINE'),
+'NAME':env.str('DB_NAME'),
+'USER':env.str('DB_USER'),
+'PASSWORD':env.str('DB_PASSWORD'),
+'HOST':env.str('DB_HOST'),
+'PORT':env.int('DB_PORT')
+}
+}
 
 # Application definition
  
