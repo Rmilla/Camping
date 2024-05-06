@@ -33,18 +33,6 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
  
 ALLOWED_HOSTS = ["127.0.0.1"]
-""""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'camping',
-        'USER': 'postgres',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-"""
 DATABASES ={'default':
 {
 'ENGINE': env.str('DB_ENGINE'),
