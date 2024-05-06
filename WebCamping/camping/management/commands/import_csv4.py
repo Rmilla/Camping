@@ -2,24 +2,15 @@ from django.core.management.base import BaseCommand
 import requests
 import csv
 import itertools
-from django.core.exceptions import MultipleObjectsReturned
 import json
 from camping.models.camping import Camping
 from camping.models.trip import Trip
 from camping.models.client import Client
 from camping.models.adresse import Adresse_camping
 from django.db import connection
-from django.db import IntegrityError
 
-class Command(BaseCommand):
-    # def __init__(self):
-    #     self.connect_mongodb()
 
-    # def connect_mongodb(self):
-    #     if not mongoengine.connection._connections:
-    #         mongoengine.connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/", username='camping', password="SqP6B8wLx62DsUf6", alias='default')
-    #     else:
-    #         mongoengine.connection.disconnect()
+class Command(BaseCommand):      
     #API KEY AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk
     def add_arguments(self, parser):
         parser.add_argument("API_KEY", type=str, help="API Key for Google Maps")
@@ -30,7 +21,6 @@ class Command(BaseCommand):
         response = requests.get(base_url, params=params)
         if response.status_code == 200:
             data = response.json()
-            #print("data", data)
             if data["status"] == "OK":
                 if data["rows"][0]["elements"][0] in ({'status': 'NOT_FOUND'}, {'status': 'ZERO_RESULTS'}):
                     return "PROBLEM"
@@ -76,13 +66,11 @@ class Command(BaseCommand):
             for record in part:
                 name_camping, camping_postal_adress, camping_city, country_camping = record["camping"].split(sep="/")
                 camping_postal_code = camping_postal_adress[-6:-1]
-                print("Camping_postal_code", camping_postal_code)
                 country_client = record["Country"]
                 city_client = record["City"].split(sep=" ")[0]
                 year = record["Year"]
                 transport = record["Transport"]
 
-                print('debut insetion ligne', line)
                 #Insertion de chaque ligne dans la table Adresse_camping
                 if name_camping not in ad_camping_dict.keys():
                     ad_camping_dict[name_camping] = {"id": id_adresse, "camping_postal_adress": camping_postal_adress, \
@@ -97,8 +85,6 @@ class Command(BaseCommand):
                                     )
                         temp_adresse = id_adresse
                         id_adresse=id_adresse+1
-                        print(f"temp_adresse {temp_adresse}")
-                        print(json.dumps(ad_camping_dict[name_camping],indent=4))
 
                 #Insertion de chaque ligne dans la table Client (on considere que chaque ville est unique pour un pays donné)
                 if city_client not in client_dict.keys():
@@ -113,10 +99,9 @@ class Command(BaseCommand):
                                        )
                         temp_id_client = client_dict[city_client]["id"]
                         id_client=id_client+1
-                        print("if, temp_id_client", temp_id_client)
                 else:
                     temp_id_client=client_dict[city_client]["id"]
-                    print("else, temp_id_client", temp_id_client)
+
                 #Insertion de chaque ligne dans la table Camping
                 if name_camping not in camping_dict.keys():
                     camping_dict[name_camping] = {"id": id_camping, "name_camping": name_camping, "id_adresse": temp_adresse, \
@@ -135,21 +120,22 @@ class Command(BaseCommand):
                                        )
                         temp_id_camping=camping_dict[name_camping]["id"]
                         id_camping=id_camping+1
-                        print("if, temp_id_camping", temp_id_camping)
                 else:
                     temp_id_camping = camping_dict[name_camping]["id"]
-                    print("else, temp_id_camping", temp_id_camping)
+
                 #Insertion de chaque ligne dans la table trip
-            
                 API_transport = "transit" if transport == "Train" else "driving"
-                distance = self.get_distance(API_KEY, city_client, camping_city, API_transport)
-                if distance == 'PROBLEM':
+                distance_sent = self.get_distance(API_KEY, city_client, camping_city, API_transport)
+                if distance_sent == 'PROBLEM':
                     continue
-                distance = float(distance.replace(",", ".")) * 1000
-                transport_em = vehicle_emissions.get(transport, 0)
-                print(line, temp_id_client, temp_id_camping)
-                emission_total = distance*transport_em
+                #Trie des valeurs selon qu'elles ont une virgule ou pas dans le retour de l'API distancemartix
+                if "," in distance_sent:
+                    distance = float(distance_sent.replace(",", ".")) * 1000
+                else:
+                    distance=float(distance_sent)
                 
+                transport_em = vehicle_emissions.get(transport, 0)
+                emission_total = distance*transport_em
                 with connection.cursor() as cursor:
                     cursor.execute("INSERT INTO camping_trip (id, emissions, vehicle, distance, year, camping_id, client_id) VALUES (%s,%s,%s,%s,%s,%s,%s)",\
                             [
@@ -164,14 +150,13 @@ class Command(BaseCommand):
                             ]       
                                    )
                     id_trip=id_trip+1
-
+                #Reliquat de code pour vérifier la bonne insertion des données dans la base
+                #print(f"id_trip : {id_trip}, nom du camping : {name_camping}, lieu du camping : {camping_city}, ville du client : {city_client}, Moyen de transport : {transport} distance : {distance}")
     #Path du fichier vehicle_emissions.json chez Pierre
-    #"C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack2\\Camping\\WebCamping\\camping\\vehicle_emissions.json"
+    #C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack2\\Camping\\WebCamping\\camping\\vehicle_emissions.json"
     def load_vehicle_data(self):
         #json_file_path = os.path.join(os.path.dirname(__file__), 'vehicle_emissions.json')
         json_file_path ="C:/Projets/Stage/Camping/WebCamping/camping/vehicle_emissions.json"
         with open(json_file_path, 'r') as file:
             data = json.load(file)
         return data
-    
-    
