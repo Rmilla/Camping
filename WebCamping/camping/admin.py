@@ -3,7 +3,7 @@ from .models.camping import Camping
 from .models.trip import Trip
 from .models.adresse import Adresse_camping
 from .models.client import Client
-from .models import Login
+from .models.login import Login
 
 
 # Register your models here.
