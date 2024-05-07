@@ -40,6 +40,6 @@ urlpatterns = [
     path('distances_by_mean_of_transport/', Distance_by_mean_of_transport.as_view(), name="Distance_by_mean_of_transport"), 
     path('emissions_by_mean_of_transport/', Emissions_by_mean_of_transport.as_view(), name="Emission_by_mean_of_transport"),
     path('insert_value/', Insert_value.as_view(), name = "Insert_value"),
-    path('login/', LoginView.as_view(), name = "Login")
+    path('login/', LoginView.as_view(), name = "Login"),
     path('', include(router.urls))
 ]
