@@ -1,22 +1,23 @@
-from django.contrib.auth import authenticate, login
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.shortcuts import render
-from django.contrib.auth.forms import AuthenticationForm
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
 
-def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return HttpResponseRedirect(reverse('home'))
-            else:
-                # Gérer le cas où l'authentification échoue
-                pass
-    else:
-        form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
+class LoginView(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        # Authenticate the user
+        if not username or not password:
+            return Response({"error": "Username and password are required"}, status=400)
+        user = authenticate(username=username, password=password)
+        if user is None:
+            return Response({"error": "Invalid username or password."}, status=400)
+
+        # Create a refresh token and access token
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        })

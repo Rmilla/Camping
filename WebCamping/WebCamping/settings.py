@@ -33,6 +33,10 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
  
 ALLOWED_HOSTS = ["127.0.0.1"]
+
+STATICFILES_DIRS = [
+         os.path.join(BASE_DIR, 'camping/static'),
+         ]
 """"
 DATABASES = {
     'default': {
@@ -67,6 +71,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     #"rest_framework.authtoken",
+    'rest_framework_simplejwt',
     "django_filters",
     "camping",
     #"admin_honeypot",

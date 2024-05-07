@@ -67,7 +67,7 @@ class Insert_value(APIView):
     )
         
         API_KEY="AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk"
-        with open('C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack2\\Camping\\WebCamping\\camping\\vehicle_emissions.json', 'r') as file:
+        with open('C:/Projets/Stage/Camping/WebCamping/camping/static/vehicle_emissions.json', 'r') as file:
             vehicle_emissions = json.load(file)
         vehicle=request["vehicle"]
         unit_emissions = vehicle_emissions.get(vehicle)

@@ -15,11 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 #TODO ajouter proprement les views
+import py_compile
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from camping.views.camping_view import CampingViewSet
 from camping.views.client_view import ClientViewSet
 from camping.views.adresse_view import AdresseViewSet
+from WebCamping import settings
 
 from rest_framework.routers import DefaultRouter
 from camping.views.gen_dashboard_emissions_group_view import EmmissionGroup
@@ -27,6 +29,9 @@ from camping.views.pie_chart import Pie_chart
 from camping.views.distance_by_mean_of_transport_view import Distance_by_mean_of_transport
 from camping.views.emission_by_mean_of_transport_view import Emissions_by_mean_of_transport
 from camping.views.insert_new_value import Insert_value
+from camping.views.auth import printF
+from camping.views.auth import MyTokenObtainPairView
+from django.views.static import serve
 
 router = DefaultRouter()
 router.register(r'client', ClientViewSet)
@@ -39,5 +44,8 @@ urlpatterns = [
     path('distances_by_mean_of_transport/', Distance_by_mean_of_transport.as_view(), name="Distance_by_mean_of_transport"), 
     path('emissions_by_mean_of_transport/', Emissions_by_mean_of_transport.as_view(), name="Emission_by_mean_of_transport"),
     path('insert_value/', Insert_value.as_view(), name = "Insert_value"),
-    path('', include(router.urls))
+    path('print',printF),
+    path('api/auth/token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('', include(router.urls)),
+    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATICFILES_DIRS}),
 ]
