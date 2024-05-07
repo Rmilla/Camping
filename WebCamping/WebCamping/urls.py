@@ -29,6 +29,7 @@ from camping.views.pie_chart import Pie_chart
 from camping.views.distance_by_mean_of_transport_view import Distance_by_mean_of_transport
 from camping.views.emission_by_mean_of_transport_view import Emissions_by_mean_of_transport
 from camping.views.insert_new_value import Insert_value
+from camping.views.login_view import LoginView
 from camping.views.auth import printF
 from camping.views.auth import MyTokenObtainPairView
 from django.views.static import serve
@@ -44,6 +45,7 @@ urlpatterns = [
     path('distances_by_mean_of_transport/', Distance_by_mean_of_transport.as_view(), name="Distance_by_mean_of_transport"), 
     path('emissions_by_mean_of_transport/', Emissions_by_mean_of_transport.as_view(), name="Emission_by_mean_of_transport"),
     path('insert_value/', Insert_value.as_view(), name = "Insert_value"),
+    path('login/', LoginView.as_view(), name = "Login")
     path('print',printF),
     path('api/auth/token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('', include(router.urls)),

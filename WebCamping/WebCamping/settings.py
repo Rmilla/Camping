@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     #"rest_framework.authtoken",
     'rest_framework_simplejwt',
     "django_filters",
@@ -79,7 +80,12 @@ INSTALLED_APPS = [
     "corsheaders",
 ]
  
- 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend', # Default Django authentication backend
     'rest_framework.authentication.TokenAuthentication', # Token-based authentication for API
@@ -125,7 +131,8 @@ WSGI_APPLICATION = 'WebCamping.wsgi.application'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
-# AUTH_USER_MODEL = 'camping.Login'
+
+AUTH_USER_MODEL = 'camping.Login'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
