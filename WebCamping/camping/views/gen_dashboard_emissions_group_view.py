@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import BasePermission
 from ..models import Camping, Client, Trip
 from ..serializer import CampingSerializer, ClientSerializer, TripSerializer
 from ..serializer import General_emission_group_serializer_years
