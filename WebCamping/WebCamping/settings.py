@@ -71,6 +71,7 @@ REST_FRAMEWORK = {
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend', # Default Django authentication backend
     'rest_framework.authentication.TokenAuthentication', # Token-based authentication for API
+    #'camping.models.Login',
 ]
  
 MIDDLEWARE = [
