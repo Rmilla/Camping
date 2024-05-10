@@ -88,6 +88,7 @@ REST_FRAMEWORK = {
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend', # Default Django authentication backend
     'rest_framework.authentication.TokenAuthentication', # Token-based authentication for API
+    "axes.backends.AxesStandaloneBackend",
 ]
  
 MIDDLEWARE = [
@@ -98,7 +99,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    "axes.middleware.AxesMiddleware",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -170,8 +171,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
  
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# disconnect(alias='default')
-# connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/",
-#         username='camping', password="SqP6B8wLx62DsUf6", alias='default')
