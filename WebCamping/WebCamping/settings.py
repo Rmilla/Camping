@@ -40,8 +40,9 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
  
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1", ""]
 
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
          os.path.join(BASE_DIR, 'camping/static'),
          ]
@@ -68,6 +69,10 @@ DATABASES ={'default':
 }
 }
 
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:4200",
+# ]
 # Application definition
  
 INSTALLED_APPS = [
@@ -114,11 +119,7 @@ MIDDLEWARE = [
     
 ]
 
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200",
-    "http://127.0.0.1:8000",
-]
+
 
 ROOT_URLCONF = 'WebCamping.urls'
  

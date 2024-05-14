@@ -40,8 +40,8 @@ router.register(r'adresse', AdresseViewSet)
 urlpatterns = [
     path("admin/", include("admin_honeypot.urls")),
     path("secretadmin/", admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('api/', include('rest_framework.urls')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework_auth')),
+    path('api/', include('rest_framework.urls', namespace='rest_framework_api')),
     path('protected/', include('rest_framework.urls')),
     path('gen_em_group/', EmmissionGroup.as_view(), name="Emmission_group_per_year"),
     path('pie_chart/', Pie_chart.as_view(), name="Pie_chart"),

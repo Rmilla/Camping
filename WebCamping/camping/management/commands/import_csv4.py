@@ -19,6 +19,7 @@ class Command(BaseCommand):
         base_url = "https://maps.googleapis.com/maps/api/distancematrix/json"
         params = {"origins": start, "destinations": end, "mode": mode, "key": api_key}
         response = requests.get(base_url, params=params)
+        print(f"Request URL: {response.url}")
         if response.status_code == 200:
             data = response.json()
             if data["status"] == "OK":
@@ -156,7 +157,7 @@ class Command(BaseCommand):
     #C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack2\\Camping\\WebCamping\\camping\\vehicle_emissions.json"
     def load_vehicle_data(self):
         #json_file_path = os.path.join(os.path.dirname(__file__), 'vehicle_emissions.json')
-        json_file_path ="C:/Projets/Stage/Camping/WebCamping/camping/vehicle_emissions.json"
+        json_file_path ="C:/Projets/Stage/Camping/WebCamping/camping/static/vehicle_emissions.json"
         with open(json_file_path, 'r') as file:
             data = json.load(file)
         return data
