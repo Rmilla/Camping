@@ -15,7 +15,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 #TODO ajouter proprement les views
-import py_compile
 from django.contrib import admin
 from django.urls import path, include, re_path
 from camping.views.camping_view import CampingViewSet
@@ -41,6 +40,9 @@ router.register(r'adresse', AdresseViewSet)
 urlpatterns = [
     path("admin/", include("admin_honeypot.urls")),
     path("secretadmin/", admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/', include('rest_framework.urls')),
+    path('protected/', include('rest_framework.urls')),
     path('gen_em_group/', EmmissionGroup.as_view(), name="Emmission_group_per_year"),
     path('pie_chart/', Pie_chart.as_view(), name="Pie_chart"),
     path('distances_by_mean_of_transport/', Distance_by_mean_of_transport.as_view(), name="Distance_by_mean_of_transport"), 

@@ -15,6 +15,14 @@ from pathlib import Path
 import os
 import environ
 from django.contrib.auth import get_user_model
+from django.conf import settings
+from corsheaders.middleware import CorsMiddleware
+
+class CorsMiddleware(CorsMiddleware):
+    def process_request(self, request):
+        response = super().process_request(request)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -63,6 +71,7 @@ DATABASES ={'default':
 # Application definition
  
 INSTALLED_APPS = [
+    "corsheaders",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,10 +83,11 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     "django_filters",
     "camping",
-    #"admin_honeypot",
-    #"axes",   
-    "corsheaders",
+    "admin_honeypot",
+    "axes",   
+    
 ]
+
  
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -92,17 +102,23 @@ AUTHENTICATION_BACKENDS = [
 ]
  
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "axes.middleware.AxesMiddleware",
+    
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+    "http://127.0.0.1:8000",
+]
 
 ROOT_URLCONF = 'WebCamping.urls'
  
@@ -171,3 +187,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
  
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AXES_COOLOE_NAME = '.axes/cache'
+AXES_FAILURE_LIMIT = 5  # Number of failed attempts before a user is locked out
+AXES_COOLOE_AGE = 86400  # 1 day
+AXES_LOCK_OUT_BY_COMBINATION = True
