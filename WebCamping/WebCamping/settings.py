@@ -18,11 +18,11 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from corsheaders.middleware import CorsMiddleware
 
-class CorsMiddleware(CorsMiddleware):
-    def process_request(self, request):
-        response = super().process_request(request)
-        response['Access-Control-Allow-Origin'] = '*'
-        return response
+# class CorsMiddleware(CorsMiddleware):
+#     def process_request(self, request):
+#         response = super().process_request(request)
+#         response['Access-Control-Allow-Origin'] = '*'
+#         return response
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -58,6 +58,13 @@ DATABASES = {
     }
 }
 """
+
+# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8000",
+    "http://localhost:4200",
+]
+# Application definition
 DATABASES ={'default':
 {
 'ENGINE': env.str('DB_ENGINE'),
@@ -69,11 +76,7 @@ DATABASES ={'default':
 }
 }
 
-CORS_ALLOW_ALL_ORIGINS = True
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:4200",
-# ]
-# Application definition
+
  
 INSTALLED_APPS = [
     "corsheaders",
