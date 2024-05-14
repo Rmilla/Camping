@@ -143,7 +143,7 @@ class Command(BaseCommand):
                                 emission_total,
                                 transport,
                                 distance,
-                                year,
+                                 year,
                                 temp_id_camping,
                                 temp_id_client,
                             
