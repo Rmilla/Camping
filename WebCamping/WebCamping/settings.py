@@ -17,6 +17,18 @@ import environ
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from corsheaders.middleware import CorsMiddleware
+from django.contrib.staticfiles import handlers
+
+# extend StaticFilesHandler to add "Access-Control-Allow-Origin" to every response
+class CORSStaticFilesHandler(handlers.StaticFilesHandler):
+    def serve(self, request):
+        response = super().serve(request)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
+
+# monkeypatch handlers to use our class instead of the original StaticFilesHandler
+handlers.StaticFilesHandler = CORSStaticFilesHandler
+
 
 # class CorsMiddleware(CorsMiddleware):
 #     def process_request(self, request):
@@ -27,7 +39,20 @@ from corsheaders.middleware import CorsMiddleware
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
  
- 
+# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+]
+CORS_ALLOW_HEADERS = [
+    'Authorization',  # Autorise l'en-tête Authorization
+    'Content-Type',  # Autorise l'en-tête Content-Type
+    'Accept',  # Autorise l'en-tête Accept
+]
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
  
@@ -44,7 +69,7 @@ ALLOWED_HOSTS = ["127.0.0.1", ""]
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-         os.path.join(BASE_DIR, 'camping/static'),
+         "C:/Projets/Stage/Camping/WebCamping/camping/static",
          ]
 """"
 DATABASES = {
@@ -59,11 +84,7 @@ DATABASES = {
 }
 """
 
-# CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:8000",
-    "http://localhost:4200",
-]
+
 # Application definition
 DATABASES ={'default':
 {
