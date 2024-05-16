@@ -58,18 +58,20 @@ INSTALLED_APPS = [
     "django_filters",
     "camping",
     "admin_honeypot",
-    #"axes",   
+    "axes",   
 ]
  
  
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend', # Default Django authentication backend
     'rest_framework.authentication.TokenAuthentication', # Token-based authentication for API
+    'axes.backends.AxesStandaloneBackend',
 ]
  
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'axes.middleware.AxesMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -77,7 +79,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 ]
- 
+
+AXES_ENABLED = True
+AXES_COOLOE_NAME = 'axes'
+
 ROOT_URLCONF = 'WebCamping.urls'
  
 TEMPLATES = [
