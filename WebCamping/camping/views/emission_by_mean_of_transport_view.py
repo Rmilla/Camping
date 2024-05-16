@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import BasePermission
 from ..serializer import Emission_by_transport_Serializer
 from django.db import connection
-from ..models.login import Login
+from ..models.login import Login, UserRole
 from rest_framework.permissions import BasePermission
 
 
@@ -13,13 +13,13 @@ class IsAdminUser(BasePermission):
     """
     def has_permission(self,request,view):
         user = request.user
-        return user.role == Login.UserRole.ADMIN
+        return user.role == UserRole.ADMIN
 
 class Emissions_by_mean_of_transport(APIView):
     permission_classes = [IsAdminUser]
     
     def get(self, request):
-        if request.user.role == Login.UserRole.ADMIN:
+        if request.user.role == UserRole.ADMIN:
             results={}
             for year in range(2013,2024,1):
                 for vehicle in ["Combustion engine car","Electric engine car", "Train","Bus"]:

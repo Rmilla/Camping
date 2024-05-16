@@ -5,7 +5,7 @@ from ..models import Camping, Client, Trip
 from ..serializer import CampingSerializer, ClientSerializer, TripSerializer
 from ..serializer import General_emission_group_serializer_years
 from django.db import connection
-from ..models.login import Login
+from ..models.login import Login, UserRole
 from rest_framework.permissions import BasePermission
 
 class IsAdminUser(BasePermission):
@@ -14,14 +14,13 @@ class IsAdminUser(BasePermission):
     """
     def has_permission(self,request,view):
         user = request.user
-        return user.role == Login.ADMIN
+        return user.role == UserRole.ADMIN
 
 class EmmissionGroup(APIView):
     permission_classes = [IsAdminUser]
     
     def get(self, request):
-        
-        if request.user.role == Login.ADMIN:
+        if request.user.role == UserRole.ADMIN:
 
             results={}
             for year in range(2013,2024,1):
