@@ -28,7 +28,7 @@ class Login(AbstractBaseUser, PermissionsMixin):
     role = models.CharField(
         max_length=2,
         choices=UserRole.choices,
-        default=UserRole.USER,
+        default=UserRole.GETCAM,
     )
     administrateur = models.BooleanField(default=False)
     objects = LoginManager()
