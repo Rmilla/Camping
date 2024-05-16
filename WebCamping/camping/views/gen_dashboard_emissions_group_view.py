@@ -14,14 +14,14 @@ class IsAdminUser(BasePermission):
     """
     def has_permission(self,request,view):
         user = request.user
-        return user.role == Login.UserRole.ADMIN
+        return user.role == Login.ADMIN
 
 class EmmissionGroup(APIView):
     permission_classes = [IsAdminUser]
     
     def get(self, request):
         
-        if request.user.role == Login.UserRole.ADMIN:
+        if request.user.role == Login.ADMIN:
 
             results={}
             for year in range(2013,2024,1):
