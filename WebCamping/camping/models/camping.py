@@ -1,25 +1,6 @@
 from django.db import models
 import json
 import os
-# # Créations des modèles.
-# json_file_path = os.path.join('C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack\\Camping\\WebCamping\\camping', 'vehicle_emissions.json')
-# def donnees_vehicule():
-#     with open(json_file_path, 'r') as file:
-#         data = json.load(file)
-#     return data
-# emissions = donnees_vehicule()
-# vehicules = [tuple(emissions.keys())]
-# class Flat(Document):
-#     name_camping = models.CharField(max_length=255)
-#     adress_camping = models.CharField(max_length=255)
-#     city = models.CharField(max_length=255)
-#     country_camping = models.CharField(max_length=255)
-#     client_country = models.CharField(max_length=255)
-#     client_city = models.CharField(max_length=255)
-#     year = fields.IntField()
-#     transport_mode = models.CharField(max_length=255)
-#     distance = fields.FloatField()
-#     emission_total = fields.DecimalField(max_digits=5, decimal_places=2)
 
 json_file_path = 'C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack\\Camping\\WebCamping\\camping\\vehicle_emissions.json'
 def donnees_vehicule():

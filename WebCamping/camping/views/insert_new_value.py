@@ -33,7 +33,7 @@ class Insert_value(APIView):
             print("Failed to make the request.")
             print(response)
             return 'PROBLEM'
-#API KEY AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk
+        #API KEY AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk
     
 
     def post(self,request,*args,**kwargs):
@@ -56,8 +56,6 @@ class Insert_value(APIView):
         self.create_client_and_trip(request_data,new_id_client, new_id_trip)
         return Response({"message" : "Client and trip created successfully."}, status=status.HTTP_201_CREATED)
     
-    
-    
     def create_client_and_trip(self,request,new_id_client, new_id_trip):
     # Create a new client
         new_client = Client.objects.create(
@@ -73,21 +71,19 @@ class Insert_value(APIView):
         unit_emissions = vehicle_emissions.get(vehicle)
 
         camping_instance = Camping.objects.get(camping_name=request["camping"])
-        
-        #distance_str=self.get_distance(API_KEY, request["client_city"], request["city_camping"], request["vehicle"])
         API_transport = "transit" if vehicle == "Train" else "driving"
         distance_sent = self.get_distance(API_KEY, request["client_city"], request["city_camping"], API_transport)
         if distance_sent == 'PROBLEM':
             return Response({"message" : "Problème avec l'API de Google"}, status=status.HTTP_500_Internal_Server_Error)
         print(f"Distance_sent by API: {distance_sent}")
+
         #Trie des valeurs selon qu'elles ont une virgule ou pas dans le retour de l'API distancematrix
         if "," in distance_sent:
             distance = float(distance_sent.replace(",", ".")) * 1000
         else:
             distance=float(distance_sent)
-        #distance = float(distance_str[0])
         print("Distance : ",distance)
-    # Create a new trip associated with the newly created client
+        # Create a new trip associated with the newly created client
         new_trip = Trip.objects.create(
             id = new_id_trip,
             vehicle=vehicle,

@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 class UserRole(models.TextChoices):
-    ADMIN = 'AD' , 'Admin'
-    USER = 'US' , 'User'
+    ADMIN = 'MG' , 'Manager général'
+    USER = 'GC' , 'Gestionnaire de camping'
 
 class LoginManager(BaseUserManager):
     use_in_migrations = True
