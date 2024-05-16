@@ -11,13 +11,13 @@ class IsAdminUser(BasePermission):
     """
     def has_permission(self,request,view):
         user = request.user
-        return user.role == UserRole.ADMIN
+        return user.role == UserRole.MANGEN
 
 class Emissions_by_mean_of_transport(APIView):
     #permission_classes = [IsAdminUser]
     
     def get(self, request):
-        if request.user.role == UserRole.ADMIN:
+        if request.user.role == UserRole.MANGEN:
             results={}
             for year in range(2013,2024,1):
                 for vehicle in ["Combustion engine car","Electric engine car", "Train","Bus"]:
