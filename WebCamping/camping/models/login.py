@@ -16,20 +16,10 @@ class LoginManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
-    def create_superuser(self, username,password, **extra_fields):
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_staff',True)
-        return self.create_user(username,password,**extra_fields)
-    
 class Login(AbstractBaseUser, PermissionsMixin):
     # Appliquer la gestion particulière de l'utilisateur au model customisé, qui hérite du model de django.
     username = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
-    role = models.CharField(
-        max_length=2,
-        choices=UserRole.choices,
-        default=UserRole.GETCAM,
-    )
     administrateur = models.BooleanField(default=False)
     objects = LoginManager()
     is_staff = models.BooleanField(default=False)
