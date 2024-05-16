@@ -14,7 +14,7 @@ class IsAdminUser(BasePermission):
         return user.role == UserRole.ADMIN
 
 class Emissions_by_mean_of_transport(APIView):
-    permission_classes = [IsAdminUser]
+    #permission_classes = [IsAdminUser]
     
     def get(self, request):
         if request.user.role == UserRole.ADMIN:

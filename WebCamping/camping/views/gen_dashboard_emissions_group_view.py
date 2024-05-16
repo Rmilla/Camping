@@ -16,7 +16,7 @@ class IsAdminUser(BasePermission):
         return user.role == UserRole.ADMIN
 
 class EmmissionGroup(APIView):
-    permission_classes = [IsAdminUser]
+    #permission_classes = [IsAdminUser]
     
     def get(self, request):
         if request.user.role == UserRole.ADMIN:
