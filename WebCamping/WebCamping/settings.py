@@ -113,17 +113,10 @@ INSTALLED_APPS = [
     "django_filters",
     "camping",
     "admin_honeypot",
-    "axes",   
-    
+    #"axes",   
 ]
-
  
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-}
-
+ 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend', # Default Django authentication backend
     'rest_framework.authentication.TokenAuthentication', # Token-based authentication for API
@@ -139,8 +132,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "axes.middleware.AxesMiddleware",
-    
+
 ]
 
 
@@ -212,8 +204,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
  
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-AXES_COOLOE_NAME = '.axes/cache'
-AXES_FAILURE_LIMIT = 5  # Number of failed attempts before a user is locked out
-AXES_COOLOE_AGE = 86400  # 1 day
-AXES_LOCK_OUT_BY_COMBINATION = True
