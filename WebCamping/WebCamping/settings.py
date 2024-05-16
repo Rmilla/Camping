@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     "django_filters",
     "camping",
     "admin_honeypot",
-    "axes",   
+    #"axes",   
 ]
  
  
@@ -75,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
  
 ROOT_URLCONF = 'WebCamping.urls'
@@ -143,8 +144,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
  
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# disconnect(alias='default')
-# connect(db="TestCamping", host=f"mongodb+srv://cluster0.l5yaw7u.mongodb.net/",
-#         username='camping', password="SqP6B8wLx62DsUf6", alias='default')
