@@ -36,6 +36,7 @@ router.register(r'adresse', AdresseViewSet)
 urlpatterns = [
     path('secretadmin/',admin.site.urls),
     path('admin/', include("admin_honeypot.urls")),
+    path('api/auth/token/', LoginView.as_view(), name='api_auth_token'),
     path('gen_em_group/', EmmissionGroup.as_view(), name="Emmission_group_per_year"),
     path('pie_chart/', Pie_chart.as_view(), name="Pie_chart"),
     path('distances_by_mean_of_transport/', Distance_by_mean_of_transport.as_view(), name="Distance_by_mean_of_transport"), 

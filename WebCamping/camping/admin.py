@@ -3,6 +3,8 @@ from .models.camping import Camping
 from .models.trip import Trip
 from .models.adresse import Adresse_camping
 from .models.client import Client
+from django.urls import path
+from camping.views.login_view import LoginView
 
 
 

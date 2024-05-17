@@ -15,6 +15,15 @@ from pathlib import Path
 import os
 import environ
 from django.contrib.auth import get_user_model
+from django.contrib.staticfiles import handlers
+
+class CORSStaticFilesHandler(handlers.StaticFilesHandler):
+    def serve(self, request):
+        response = super().serve(request)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
+
+handlers.StaticFilesHandler = CORSStaticFilesHandler
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -47,6 +56,7 @@ DATABASES ={'default':
 # Application definition
  
 INSTALLED_APPS = [
+    "corsheaders",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -63,12 +73,13 @@ INSTALLED_APPS = [
  
  
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend', # Default Django authentication backend
     'rest_framework.authentication.TokenAuthentication', # Token-based authentication for API
+    'django.contrib.auth.backends.ModelBackend', # Default Django authentication backend 
     'axes.backends.AxesStandaloneBackend',
 ]
  
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'axes.middleware.AxesMiddleware',
@@ -126,6 +137,19 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+#CORS
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+]
+CORS_ALLOW_METHODS = [
+    'GET',
+    'OPTIONS',
+    'POST',
+    'PUT',
+    'DELETE',
+]
  
  
 # Internationalization
@@ -143,7 +167,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
  
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+         "C:/Projets/Stage/Camping/WebCamping/camping/static",
+         ]
  
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
