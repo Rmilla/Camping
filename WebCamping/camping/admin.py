@@ -11,7 +11,3 @@ admin.site.register(Camping)
 admin.site.register(Adresse_camping)
 admin.site.register(Client)
 admin.site.register(Trip)
-
-@admin.register(Login)
-class LoginAdmin(admin.ModelAdmin):
-    list_display = 'username'
