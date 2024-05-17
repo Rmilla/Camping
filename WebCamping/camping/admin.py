@@ -14,4 +14,4 @@ admin.site.register(Trip)
 
 @admin.register(Login)
 class LoginAdmin(admin.ModelAdmin):
-    list_display = ('username', 'role')
+    list_display = 'username'
