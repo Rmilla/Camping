@@ -10,47 +10,92 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+ 
 from pathlib import Path
+import os
+import environ
+from django.contrib.auth import get_user_model
+from django.contrib.staticfiles import handlers
+
+class CORSStaticFilesHandler(handlers.StaticFilesHandler):
+    def serve(self, request):
+        response = super().serve(request)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
+
+handlers.StaticFilesHandler = CORSStaticFilesHandler
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+ 
+ 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
+ 
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+ 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8k=nd_&r0t!wo&-9^s$eyp8#(0e(yypcs5f+g3=-qn4klh-5o_'
-
+SECRET_KEY = env("SECRET_KEY")
+ 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
-
+ 
+ALLOWED_HOSTS = ["127.0.0.1"]
+DATABASES ={'default':
+{
+'ENGINE': env.str('DB_ENGINE'),
+'NAME':env.str('DB_NAME'),
+'USER':env.str('DB_USER'),
+'PASSWORD':env.str('DB_PASSWORD'),
+'HOST':env.str('DB_HOST'),
+'PORT':env.int('DB_PORT')
+}
+}
 
 # Application definition
-
+ 
 INSTALLED_APPS = [
+    "corsheaders",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    #"rest_framework.authtoken",
+    "django_filters",
+    "camping",
+    "admin_honeypot",
+    "axes",   
 ]
-
+ 
+ 
+AUTHENTICATION_BACKENDS = [
+    'rest_framework.authentication.TokenAuthentication', # Token-based authentication for API
+    'django.contrib.auth.backends.ModelBackend', # Default Django authentication backend 
+    'axes.backends.AxesStandaloneBackend',
+]
+ 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'axes.middleware.AxesMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
-ROOT_URLCONF = 'WebCamping.urls'
+AXES_ENABLED = True
+AXES_COOLOE_NAME = 'axes'
 
+ROOT_URLCONF = 'WebCamping.urls'
+ 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -66,23 +111,17 @@ TEMPLATES = [
         },
     },
 ]
-
+ 
 WSGI_APPLICATION = 'WebCamping.wsgi.application'
-
-
+ 
+ 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
+# AUTH_USER_MODEL = 'camping.Login'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -99,25 +138,41 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+#CORS
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+]
+CORS_ALLOW_METHODS = [
+    'GET',
+    'OPTIONS',
+    'POST',
+    'PUT',
+    'DELETE',
+]
+ 
+ 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
-
+ 
 LANGUAGE_CODE = 'en-us'
-
+ 
 TIME_ZONE = 'UTC'
-
+ 
 USE_I18N = True
-
+ 
 USE_TZ = True
-
-
+ 
+ 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-STATIC_URL = 'static/'
-
+ 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+         "C:/Projets/Stage/Camping/WebCamping/camping/static",
+         ]
+ 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
+ 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

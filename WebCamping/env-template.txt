@@ -1,0 +1,8 @@
+SECRET_KEY='django-insecure-8k=nd_&r0t!wo&-9^s$eyp8#(0e(yypcs5f+g3=-qn4klh-5o_'
+ 
+DB_ENGINE=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=

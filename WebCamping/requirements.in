@@ -1,0 +1,22 @@
+Django
+Django==3.0
+django-environ
+djangorestframework
+djangorestframework-simplejwt
+django-filter
+django-missing 
+markdown
+psycopg2
+googlemaps
+psycopg2
+psycopg2-binary
+googlemaps 
+
+# Security
+django-axes
+django-admin-honeypot-updated-2021
+django-cors-middleware
+django-cors-headers
+django_mongoengine
+djangorestframework-simplejwt-mongoengine
+djangorestframework-simplejwt
