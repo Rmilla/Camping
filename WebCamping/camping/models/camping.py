@@ -21,7 +21,7 @@ import os
 #     distance = fields.FloatField()
 #     emission_total = fields.DecimalField(max_digits=5, decimal_places=2)
 
-json_file_path = 'C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack\\Camping\\WebCamping\\camping\\vehicle_emissions.json'
+json_file_path = 'C:/Projets/Stage/Camping/WebCamping/camping/static/vehicle_emissions.json'
 def donnees_vehicule():
     with open(json_file_path, 'r') as file:
         data = json.load(file)
