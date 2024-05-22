@@ -3,7 +3,8 @@ from rest_framework.response import Response
 from django.db import connection
 import requests
 import json
-import os
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.conf import settings
 
 from rest_framework import status
@@ -12,6 +13,9 @@ from ..models import Trip
 from ..models import Camping
 
 class Insert_value(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    
     def get_distance(self, api_key, start, end, mode):
         base_url = "https://maps.googleapis.com/maps/api/distancematrix/json"
         params = {"origins": start, "destinations": end, "mode": mode, "key": api_key}
@@ -37,6 +41,7 @@ class Insert_value(APIView):
     
 
     def post(self,request,*args,**kwargs):
+        
         request_data=request.data
         vehicle = request_data['vehicle']
         

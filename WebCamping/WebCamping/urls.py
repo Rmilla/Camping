@@ -17,11 +17,16 @@ Including another URLconf
 #TODO ajouter proprement les views
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 from camping.views.camping_view import CampingViewSet
 from camping.views.client_view import ClientViewSet
 from camping.views.adresse_view import AdresseViewSet
 
 from rest_framework.routers import DefaultRouter
+
 from camping.views.gen_dashboard_emissions_group_view import EmmissionGroup
 from camping.views.pie_chart import Pie_chart
 from camping.views.distance_by_mean_of_transport_view import Distance_by_mean_of_transport
@@ -43,5 +48,7 @@ urlpatterns = [
     path('emissions_by_mean_of_transport/', Emissions_by_mean_of_transport.as_view(), name="Emission_by_mean_of_transport"),
     path('insert_value/', Insert_value.as_view(), name = "Insert_value"),
     path('login/', LoginView.as_view(), name='Login'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('', include(router.urls))
 ]
