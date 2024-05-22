@@ -1,11 +1,15 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from ..models import Camping, Client, Trip
 from ..serializer import CampingSerializer, ClientSerializer, TripSerializer
 from ..serializer import General_emission_group_serializer_years
 from django.db import connection
 
 class EmmissionGroup(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         results={}
         for year in range(2013,2024,1):
