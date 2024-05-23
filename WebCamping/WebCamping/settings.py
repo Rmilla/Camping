@@ -16,6 +16,7 @@ import os
 import environ
 from django.contrib.auth import get_user_model
 from django.contrib.staticfiles import handlers
+from datetime import timedelta
 
 class CORSStaticFilesHandler(handlers.StaticFilesHandler):
     def serve(self, request):
@@ -71,7 +72,7 @@ INSTALLED_APPS = [
     "admin_honeypot",
     "axes",   
 ]
- 
+
  
 AUTHENTICATION_BACKENDS = [
     'rest_framework.authentication.TokenAuthentication', # Token-based authentication for API
@@ -95,6 +96,9 @@ MIDDLEWARE = [
 
 AXES_ENABLED = True
 AXES_COOLOE_NAME = 'axes'
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),}
 
 ROOT_URLCONF = 'WebCamping.urls'
  
