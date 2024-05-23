@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -19,13 +20,17 @@ class EmmissionGroup(APIView):
                     )
                     row = cursor.fetchone()
                     emissions = row[0]
-                    results[f'y{year}']=emissions
+                    results[year]=emissions
         print(results)
         # Serialize the queryset
-        serializer = General_emission_group_serializer_years(data=results, many=False)
+        serializer_data = []
+        for year, emissions in results.items():
+            serializer = General_emission_group_serializer_years(data={'year': year, 'emissions': emissions})
+            if serializer.is_valid():
+                print(serializer.data)
+                serializer_data.append(serializer.data)
+            else:
+                return Response(serializer.errors, status=400)
         print(serializer)
         # Return the serialized data
-        if serializer.is_valid():
-             return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status=400)
+        return Response(serializer_data)
