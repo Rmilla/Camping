@@ -23,7 +23,7 @@ from rest_framework_simplejwt.views import (
 )
 from camping.views.camping_view import CampingViewSet
 from camping.views.client_view import ClientViewSet
-from camping.views.adresse_view import AdresseViewSet
+from camping.views.pays_view import PaysViewSet
 
 from rest_framework.routers import DefaultRouter
 
@@ -37,7 +37,7 @@ from camping.views.login_view import LoginView
 router = DefaultRouter()
 router.register(r'client', ClientViewSet)
 router.register(r'camping', CampingViewSet)
-router.register(r'adresse', AdresseViewSet)
+router.register(r'adresse', PaysViewSet)
 urlpatterns = [
     path('secretadmin/',admin.site.urls),
     path('admin/', include("admin_honeypot.urls")),

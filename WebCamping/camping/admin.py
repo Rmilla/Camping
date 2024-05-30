@@ -1,15 +1,20 @@
 from django.contrib import admin
-from .models.camping import Camping
-from .models.trip import Trip
-from .models.adresse import Adresse_camping
-from .models.client import Client
 from django.urls import path
-from camping.views.login_view import LoginView
 
-
+from .models.camping import Camping
+from .models.client import Client
+from .models.distance import EstDistant
+from .models.pays import Pays
+from .models.vehicule import Vehicule
+from .models.ville import Ville
+from .models.voyage import Voyage
 
 # Register your models here.
 admin.site.register(Camping)
-admin.site.register(Adresse_camping)
 admin.site.register(Client)
-admin.site.register(Trip)
+admin.site.register(EstDistant)
+admin.site.register(Pays)
+admin.site.register(Vehicule)
+admin.site.register(Ville)
+admin.site.register(Voyage)
+

@@ -2,15 +2,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from ..models import Camping, Client, Trip
-from ..serializer import CampingSerializer, ClientSerializer, TripSerializer
+from ..models import Camping, Client, EstDistant
+from ..serializer import CampingSerializer, ClientSerializer, DistanceSerializer
 from ..serializer import Pie_chart_serializer
 from django.db import connection
 
 class Pie_chart(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
-    def get(self, request):
+    def post(self, request):
         results={}
         print("Type de la requête : ", type(request.data), "Requête : ", request.data)
         year = request.data['year']

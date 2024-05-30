@@ -1,15 +1,15 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, permissions
-from ..models.camping import Camping
-from camping.serializer.camping_serializer import CampingSerializer
+from ..models.pays import Pays
+from ..serializer.pays_serializer import PaysSerializer
 
 # Create your views here.
 
-class CampingViewSet(viewsets.ModelViewSet):
-    queryset = Camping.objects.all()
-    serializer_class = CampingSerializer
+class PaysViewSet(viewsets.ModelViewSet):
+    queryset = Pays.objects.all()
+    serializer_class = PaysSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
 
     def get_queryset(self):
-        return Camping.objects.all()
+        return Pays.objects.all()

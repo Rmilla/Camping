@@ -3,8 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from ..models import Camping, Client, Trip
-from ..serializer import CampingSerializer, ClientSerializer, TripSerializer
+from ..models import Camping, Client, EstDistant
+from ..serializer import CampingSerializer, ClientSerializer, DistanceSerializer
 from ..serializer import General_emission_group_serializer_years
 from django.db import connection
 

@@ -1,7 +1,5 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
-from django.http import JsonResponse
-from rest_framework.decorators import action
 from rest_framework import viewsets, permissions
 from ..models.client import Client
 from camping.serializer.client_serializer import ClientSerializer   
