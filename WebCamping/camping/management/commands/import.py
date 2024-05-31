@@ -218,11 +218,6 @@ class Command(BaseCommand):
                                          ]
                                          )
                     id_voyage = id_voyage+1
-                
-                #TODO Vérifier que cette table n'a pas besoin de else
-                # else:
-                #      with connection.cursor() as cursor:
-                #           cursor.execute("SELECT id_voyage FROM camping_voyage WHERE camping_voyage.")
 
                 #Insertion des données dans la table distance
                 API_KEY = "AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk"
@@ -240,6 +235,7 @@ class Command(BaseCommand):
                     distance = float(distance_sent.replace(",", ".")) * 1000
                 else:
                     distance=float(distance_sent)
+                distance = distance*2
                 with connection.cursor() as cursor:
                     cursor.execute("SELECT COUNT(*) FROM camping_camping")
                     row = cursor.fetchone()
@@ -248,7 +244,7 @@ class Command(BaseCommand):
                     cursor.execute("SELECT COUNT(*) FROM camping_ville")
                     row = cursor.fetchone()
                     nombre_ville = row[0]
-                nombre_trajet = nombre_camping*nombre_ville
+                #nombre_trajet = nombre_camping*nombre_ville
                 with connection.cursor() as cursor:
                     cursor.execute("INSERT INTO camping_estdistant VALUES (%s,%s,%s,%s)",
                                            [

@@ -17,15 +17,18 @@ class Pie_chart(APIView):
         print("Type de year : ", type(year), "Valeur de year : ", year)
         for camping in ["Belle Plage", "Blue Bayou", "Cap Sud", "València"]:
             with connection.cursor() as cursor:
-                    cursor.execute("""SELECT SUM(ct.emissions) 
-FROM camping_trip as ct
-INNER JOIN camping_camping as cc ON cc.id = ct.camping_id 
-WHERE ct.year = %s 
-AND cc.camping_name = %s""",
+                    cursor.execute(
+"""SELECT SUM(cve.empreinte_carbone_unitaire*ced.distance) 
+FROM camping_vehicule as cve
+INNER JOIN camping_voyage as cvo ON cve.id_vehicule = cvo.id_vehicule_id
+INNER JOIN camping_camping as cac ON cvo.id_camping_id=cac.id_camping
+INNER JOIN camping_estdistant as ced ON ced.id_camping_id=cac.id_camping
+WHERE CAST(TO_CHAR(cvo.date, 'YYYY') AS INTEGER) = %s 
+AND cac.nom_camping = %s""",
                     [year, camping]
                     )
                     row = cursor.fetchone()
-                    emissions = row[0]
+                    emissions = row[0]/1000
                     results[camping]=emissions
                     print("Camping : ", camping, "Emissions : ", emissions)
         print(results)

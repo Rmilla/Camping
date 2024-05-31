@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.http import HttpResponse
 from django.db import connection
 import requests
 from rest_framework.permissions import IsAuthenticated
@@ -52,14 +53,33 @@ class Insert_value(APIView):
         date = request_data["date"]
         pays = request_data["client_country"]
 
-        #
-        nom_filtre = Client.objects.filter(nom_complet__exact=nom)
-        ville_filtre = Ville.objects.filter(nom_ville__exact=ville_client)
-        date_filtre=Voyage.objects.filter(date__exact=date)
-        print(nom_filtre)
-        print(ville_filtre)
-        print(date_filtre)
-        if not ville_filtre.exists() or not nom_filtre.exists() or not date_filtre.exists():
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT nom_complet FROM camping_client WHERE camping_client.nom_complet = (%s)",
+                           [nom])
+            row = cursor.fetchone()
+            print("Le nom en base est : ", row)
+            if row == None:
+                nom_filtre=True
+            else:
+                nom_filtre=False
+            cursor.execute("SELECT nom_ville FROM camping_ville WHERE camping_ville.nom_ville = (%s)",
+                           [ville_client])
+            row = cursor.fetchone()
+            print("La ville en base est : ", row)
+            if row == None:
+                ville_filtre=True
+            else:
+                ville_filtre=False
+            cursor.execute("SELECT date FROM camping_voyage WHERE camping_voyage.date =(%s)",
+                           [date]
+                           )
+            row = cursor.fetchone()
+            print("La date en base est : ", row)
+            if row == None:
+                date_filtre=True
+            else:
+                date_filtre=False
+        if ville_filtre or nom_filtre or date_filtre:
             with connection.cursor() as cursor:
                 cursor.execute("SELECT id_pays FROM camping_pays WHERE camping_pays.nom = (%s)",
                                [pays]
@@ -76,8 +96,8 @@ class Insert_value(APIView):
                                    )
                 row = cursor.fetchone()
                 id_camping = row[0]
-                if not ville_filtre.exists():
-                    cursor.execute("MAX(id_ville) FROM camping_ville")
+                if ville_filtre:
+                    cursor.execute("SELECT MAX(id_ville) FROM camping_ville")
                     row = cursor.fetchone()
                     id_ville = row[0]+1
                     cursor.execute("INSERT INTO camping_ville VALUES (%s,%s,%s)",
@@ -89,7 +109,7 @@ class Insert_value(APIView):
                                    )
                     row = cursor.fetchone()
                     id_ville = row[0]
-                if not nom_filtre.exists():
+                if nom_filtre:
                     cursor.execute("SELECT MAX(id_client) FROM camping_client")
                     row = cursor.fetchone()
                     id_client = row[0]+1
@@ -102,7 +122,7 @@ class Insert_value(APIView):
                                    )
                     row = cursor.fetchone()
                     id_client = row[0]
-                if not date_filtre.exists():
+                if date_filtre:
                     cursor.execute("SELECT MAX(id_voyage) FROM camping_voyage")
                     row = cursor.fetchone()
                     id_voyage = row[0]+1
@@ -114,80 +134,20 @@ class Insert_value(APIView):
                 distance_sent = self.get_distance(API_KEY, ville_client, ville_camping, API_transport)
                 if distance_sent == 'PROBLEM':
                     return Response({"message" : "Problème avec l'API de Google"}, status=status.HTTP_500_Internal_Server_Error)
-                print(f"Distance_sent by API: {distance_sent}")
                 #Trie des valeurs selon qu'elles ont une virgule ou pas dans le retour de l'API distancematrix
                 if "," in distance_sent:
                     distance = float(distance_sent.replace(",", ".")) * 1000
                 else:
                     distance=float(distance_sent)
-                cursor.execute("SELECT MAX(id_distance) FROM camping_est")
+                distance= distance*2
+                cursor.execute("SELECT MAX(id_distance) FROM camping_estdistant")
                 row = cursor.fetchone()
                 id_distance = row[0]+1
                 cursor.execute("INSERT INTO camping_estdistant VALUES (%s,%s,%s,%s)",
                                [id_distance, distance, id_camping, id_ville]
                                )
-                
-                
-    # def post(self,request,*args,**kwargs):
-        
-    #     request_data=request.data
-    #     vehicule = request_data['vehicle']
-        
-    #     with connection.cursor() as cursor:
-    #                 cursor.execute(
-    #     "SELECT MAX(id) FROM camping_client",
-    #                 )
-    #                 row = cursor.fetchone()
-    #                 new_id_client = row[0]+1
-
-    #     with connection.cursor() as cursor:
-    #                 cursor.execute(
-    #     "SELECT MAX(id) FROM camping_trip",
-    #                 )
-    #                 row = cursor.fetchone()
-    #                 new_id_trip = row[0]+1
-
-    #     self.create_client_and_trip(request_data,new_id_client, new_id_trip)
-    #     return Response({"message" : "Client and trip created successfully."}, status=status.HTTP_201_CREATED)
-    
-    
-    
-    # def create_client_and_trip(self,request,new_id_client, new_id_trip):
-    # # Create a new client
-    #     new_client = Client.objects.create(
-    #         id = new_id_client,
-    #         client_city = request["client_city"],
-    #         client_country = request["client_country"],
-    # )
-        
-    #     API_KEY="AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk"
-    #     with open('C:\\Users\\sabat\\Documents\\Diginamic\\Stage\\CampingBack4\\Camping\\WebCamping\\camping\\static\\vehicle_emissions.json', 'r') as file:
-    #         vehicle_emissions = json.load(file)
-    #     vehicle=request["vehicle"]
-    #     unit_emissions = vehicle_emissions.get(vehicle)
-
-    #     camping_instance = Camping.objects.get(camping_name=request["camping"])
-        
-    #     #distance_str=self.get_distance(API_KEY, request["client_city"], request["city_camping"], request["vehicle"])
-    #     API_transport = "transit" if vehicle == "Train" else "driving"
-    #     distance_sent = self.get_distance(API_KEY, request["client_city"], request["city_camping"], API_transport)
-    #     if distance_sent == 'PROBLEM':
-    #         return Response({"message" : "Problème avec l'API de Google"}, status=status.HTTP_500_Internal_Server_Error)
-    #     print(f"Distance_sent by API: {distance_sent}")
-    #     #Trie des valeurs selon qu'elles ont une virgule ou pas dans le retour de l'API distancematrix
-    #     if "," in distance_sent:
-    #         distance = float(distance_sent.replace(",", ".")) * 1000
-    #     else:
-    #         distance=float(distance_sent)
-    #     #distance = float(distance_str[0])
-    #     print("Distance : ",distance)
-    # # Create a new trip associated with the newly created client
-    #     new_trip = Trip.objects.create(
-    #         id = new_id_trip,
-    #         vehicle=vehicle,
-    #         year=request["year"],
-    #         distance = distance,
-    #         emissions=distance*unit_emissions,
-    #         client=new_client, # Associate the trip with the client
-    #         camping = camping_instance
-    # )
+                response = Response({"messsage": "Données ajoutées"}, status=status.HTTP_201_CREATED)
+                return response
+        else:
+            response = Response({"message": "Voyage déjà dans la base"}, status=status.HTTP_401_UNAUTHORIZED)
+            return response

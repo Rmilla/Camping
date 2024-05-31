@@ -14,11 +14,17 @@ class Emissions_by_mean_of_transport(APIView):
             for vehicle in ["Combustion engine car","Electric engine car", "Train","Bus"]:
                 with connection.cursor() as cursor:
                     cursor.execute(
-        "SELECT SUM(emissions) FROM camping_trip WHERE year = %s and vehicle = %s",
+"SELECT SUM(ced.distance*cve.empreinte_carbone_unitaire) \
+FROM camping_vehicule as cve \
+INNER JOIN camping_voyage as cvo ON cve.id_vehicule = cvo.id_vehicule_id \
+INNER JOIN camping_camping as cac ON cvo.id_camping_id=cac.id_camping \
+INNER JOIN camping_estdistant as ced ON ced.id_camping_id=cac.id_camping \
+WHERE CAST(TO_CHAR(cvo.date, 'YYYY') AS INTEGER) = (%s) \
+AND cve.nom_vehicule = %s",
                     [year,vehicle],
                     )
                     row = cursor.fetchone()
-                    emissions = row[0]
+                    emissions = row[0]/1000
                     if vehicle not in results:
                         results[vehicle] = [] 
                     results[vehicle].append(emissions)
