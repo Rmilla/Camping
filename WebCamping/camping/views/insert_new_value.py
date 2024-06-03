@@ -44,24 +44,21 @@ class Insert_value(APIView):
         pays = request_data["client_country"]
 
         with connection.cursor() as cursor:
-            cursor.execute("SELECT nom_complet FROM camping_client WHERE camping_client.nom_complet = (%s)",
-                           [nom])
+            cursor.execute("SELECT nom_complet FROM camping_client WHERE camping_client.nom_complet = (%s)", [nom])
             row = cursor.fetchone()
             print("Le nom en base est : ", row)
             if row == None:
                 nom_filtre=True
             else:
                 nom_filtre=False
-            cursor.execute("SELECT nom_ville FROM camping_ville WHERE camping_ville.nom_ville = (%s)",
-                           [ville_client])
+            cursor.execute("SELECT nom_ville FROM camping_ville WHERE camping_ville.nom_ville = (%s)", [ville_client])
             row = cursor.fetchone()
             print("La ville en base est : ", row)
             if row == None:
                 ville_filtre=True
             else:
                 ville_filtre=False
-            cursor.execute("SELECT date FROM camping_voyage WHERE camping_voyage.date =(%s)",
-                           [date]
+            cursor.execute("SELECT date FROM camping_voyage WHERE camping_voyage.date =(%s)", [date]
                            )
             row = cursor.fetchone()
             print("La date en base est : ", row)
