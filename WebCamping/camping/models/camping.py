@@ -7,4 +7,3 @@ class Camping(models.Model):
     adresse_complete = models.CharField(max_length=200)
     ville_camping = models.CharField(max_length=200)
     pays_camping = models.CharField(max_length=200)
-    #id_ville = models.ForeignKey('ville', on_delete=models.CASCADE, related_name='camping')

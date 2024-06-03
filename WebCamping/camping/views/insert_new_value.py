@@ -1,20 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.http import HttpResponse
 from django.db import connection
 import requests
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from django.conf import settings
-
 from rest_framework import status
-
-from ..models import Client
-from ..models import EstDistant
-from ..models import Camping
-from ..models import Ville
-from ..models import voyage
-from ..models import Voyage
 
 class Insert_value(APIView):
     authentication_classes = [JWTAuthentication]
@@ -81,54 +71,38 @@ class Insert_value(APIView):
                 date_filtre=False
         if ville_filtre or nom_filtre or date_filtre:
             with connection.cursor() as cursor:
-                cursor.execute("SELECT id_pays FROM camping_pays WHERE camping_pays.nom = (%s)",
-                               [pays]
-                               )
+                cursor.execute("SELECT id_pays FROM camping_pays WHERE camping_pays.nom = (%s)", [pays])                               
                 row = cursor.fetchone()
                 id_pays = row[0]
-                cursor.execute("SELECT id_vehicule FROM camping_vehicule WHERE camping_vehicule.nom_vehicule =(%s)",
-                                   [vehicule]
-                                   )
+                cursor.execute("SELECT id_vehicule FROM camping_vehicule WHERE camping_vehicule.nom_vehicule =(%s)", [vehicule])
                 row = cursor.fetchone()
                 id_vehicule=row[0]
-                cursor.execute("SELECT id_camping FROM camping_camping WHERE nom_camping =(%s)",
-                                   [camping]
-                                   )
+                cursor.execute("SELECT id_camping FROM camping_camping WHERE nom_camping =(%s)", [camping])
                 row = cursor.fetchone()
                 id_camping = row[0]
                 if ville_filtre:
                     cursor.execute("SELECT MAX(id_ville) FROM camping_ville")
                     row = cursor.fetchone()
                     id_ville = row[0]+1
-                    cursor.execute("INSERT INTO camping_ville VALUES (%s,%s,%s)",
-                                   [id_ville, ville_client, id_pays]
-                                   )
+                    cursor.execute("INSERT INTO camping_ville VALUES (%s,%s,%s)", [id_ville, ville_client, id_pays])
                 else:
-                    cursor.execute("SELECT id_ville FROM camping_ville WHERE camping_ville.nom_ville = (%s)",
-                                   [ville_client]
-                                   )
+                    cursor.execute("SELECT id_ville FROM camping_ville WHERE camping_ville.nom_ville = (%s)", [ville_client])
                     row = cursor.fetchone()
                     id_ville = row[0]
                 if nom_filtre:
                     cursor.execute("SELECT MAX(id_client) FROM camping_client")
                     row = cursor.fetchone()
                     id_client = row[0]+1
-                    cursor.execute("INSERT INTO camping_client VALUES (%s,%s,%s)",
-                                   [id_client, nom, id_ville]
-                                   )
+                    cursor.execute("INSERT INTO camping_client VALUES (%s,%s,%s)", [id_client, nom, id_ville])
                 else:
-                    cursor.execute("SELECT id_client FROM camping_client WHERE camping_client.nom_complet =(%s)",
-                                   [nom]
-                                   )
+                    cursor.execute("SELECT id_client FROM camping_client WHERE camping_client.nom_complet =(%s)", [nom])
                     row = cursor.fetchone()
                     id_client = row[0]
-                if date_filtre:
+                if date_filtre or nom_filtre or ville_filtre:
                     cursor.execute("SELECT MAX(id_voyage) FROM camping_voyage")
                     row = cursor.fetchone()
                     id_voyage = row[0]+1
-                    cursor.execute("INSERT INTO camping_voyage VALUES (%s,%s,%s,%s,%s)",
-                                   [id_voyage, date, id_camping,id_client,id_vehicule]
-                                   )
+                    cursor.execute("INSERT INTO camping_voyage VALUES (%s,%s,%s,%s,%s)",[id_voyage, date, id_camping,id_client,id_vehicule])
                 API_KEY = "AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk"
                 API_transport = "transit" if vehicule == "Train" else "driving"
                 distance_sent = self.get_distance(API_KEY, ville_client, ville_camping, API_transport)
