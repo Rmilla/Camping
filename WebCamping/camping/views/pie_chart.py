@@ -10,7 +10,7 @@ from django.db import connection
 class Pie_chart(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
-    def get(self, request):
+    def post(self, request):
         results={}
         print("Type de la requête : ", type(request.data), "Requête : ", request.data)
         year = request.data['year']
