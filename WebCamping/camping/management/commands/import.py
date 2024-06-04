@@ -149,11 +149,8 @@ class Command(BaseCommand):
                 if id_voyage not in voyage_dict.keys():
                     voyage_dict[id_voyage] = {"id": id_voyage}
                     with connection.cursor() as cursor:
-                        cursor.execute("INSERT INTO camping_voyage VALUES (%s,%s,%s,%s,%s)",[id_voyage,date,temp_id_camping,temp_id_client,temp_id_vehicule
-                                         ]
-                                         )
+                        cursor.execute("INSERT INTO camping_voyage VALUES (%s,%s,%s,%s,%s)",[id_voyage,date,temp_id_camping,temp_id_client,temp_id_vehicule])
                     id_voyage = id_voyage+1
-
                 #Insertion des données dans la table distance
                 API_KEY = "AIzaSyBawSSjukicDdh7sfbVcToVktSypmWwQmk"
                 API_transport = "transit" if vehicule == "Train" else "driving"
@@ -172,15 +169,10 @@ class Command(BaseCommand):
                     distance=float(distance_sent)
                 distance = distance*2
                 with connection.cursor() as cursor:
-                    cursor.execute("INSERT INTO camping_estdistant VALUES (%s,%s,%s,%s)",
-                                           [
-                                            id_distance,
-                                            distance,
-                                            temp_id_camping,
-                                            temp_id_ville
-                                           ]
-                                           )
+                    cursor.execute("INSERT INTO camping_estdistant VALUES (%s,%s,%s,%s)",[id_distance,distance, temp_id_camping, temp_id_ville])
                     print("id distance : ", id_distance)
                     print("Ville camping : ", ville_camping)
                     print("Ville client : " , ville)
                     id_distance = id_distance+1
+                cursor.close()
+                connection.close()
