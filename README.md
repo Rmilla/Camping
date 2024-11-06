@@ -8,4 +8,4 @@ Pour lancer :
 - installer le paquet piptools *pip install pip-tools* (qui servira a lire le fichier de requirements)
 - à l'aide de *cd* se déplacer dans le dossier *Webcamping*
 - éxécuter *pip install -r .\requirements.txt* pour installer la liste des dépendances
-- utiliser le dossier env-template pour configurer le fichier .env 
+- utiliser le dossier env-template pour configurer le fichier .env en fonction de votre bases de données
