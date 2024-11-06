@@ -1,7 +1,7 @@
 # Camping BACKEND
 
 Pour lancer : 
-- lancer une invite de commande 
+- ouvrir une invite de commande 
 - à l'aide de *cd* se déplacer dans l'arborence des dossiers jusqu'à celui ou se trouve notre dossier
 - créer un environnement virtuel dans lequel éxécuter le projet avec *python -m venv venv*
 - activer l'environnement virtuel avec *.\venv\Scripts\activate 
